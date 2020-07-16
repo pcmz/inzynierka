@@ -1,0 +1,1 @@
+DROP TABLE categories, customers, employees, order_details, orders, products, shippers, suppliers;
