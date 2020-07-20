@@ -1,11 +1,11 @@
 # inzynierka
 
 ## before application start run mysql as docker
-`sudo docker run --name pcmz-mysql -e MYSQL_ROOT_PASSWORD=pcmzroot -e MYSQL_DATABASE=InzDb -e MYSQL_USER=pcmz-user -e MYSQL_PASSWORD=pcmzpassword -p 3307:3306 -d mysql`
+`sudo docker run --name pcmz-mysql2 -e MYSQL_ROOT_PASSWORD=admin -e MYSQL_DATABASE=northwind -p 3306:3306 -d mysql`
 
 ## How to run?
-Download Keycloak Server from the site, go to /bin/standalone.bat and run (for Windows)
-Create a database called: northwind (for example in Mysql Workbench), parameters database in the file: application.properties
+Download Keycloak Server from the site, go to /bin/standalone.bat (for Windows) or /bin/standalone.sh (for Unix based systems) and run
+Create a database called: northwind (for example in Mysql Workbench), parameters for database in the file: application.properties
 Run the file: northwind-MySQL.sql
 Run backend (run PracaInzynierskaApplication)
 Download Angular from the site
