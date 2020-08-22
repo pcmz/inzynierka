@@ -1,28 +1,85 @@
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    <h2>Product List</h2>
-  </div>
-  <div class="panel-body">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Product Name</th>
-          <th>Quantity</th>
-          <th>Unit Price</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let product of products | async">
-          <td>{{product.productName}}</td>
-          <td>{{product.quantity}}</td>
-          <td>{{product.unitPrice}}</td>
-          <td><button (click)="deleteProduct(product.id)" class="btn btn-danger">Delete</button>
-              <button (click)="updateProduct(product.id)" class="btn btn-info" style="margin-left: 10px">Update</button>
-              <button (click)="productDetails(product.id)" class="btn btn-info" style="margin-left: 10px">Details</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+<div class="example-header">
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search Product"#input>
+  </mat-form-field>
+</div>
+
+<div>
+  <table mat-table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="id", >
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="productName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Product name </mat-header-cell>
+      <mat-cell *matCellDef="let row"> <img src={{row.ipath}} class="mr-2" style="width: 40px"> {{row.productName}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="unit">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Unit </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.unit}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="quantityPerUnit">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Quantity per unit </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.quantityPerUnit}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="unitPrice">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Unit price [zl gross] </mat-header-cell>
+      <mat-cell *matCellDef="let row" [style.color]="row.unitPrice"> {{row.unitPrice}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="quantity">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Quantity [m2/lm] </mat-header-cell>
+      <mat-cell *matCellDef="let row" [style.color]="row.quantity"> {{row.quantity}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actionsColumn">
+        <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+        <mat-cell *matCellDef="let row">
+            <button id=delete (click)="deleteProduct(row.id)">Delete</button>
+            <button id=update (click)="updateProduct(row.id)">Update</button>
+            <button id=details (click)="productDetails(row.id)">Details</button>
+        </mat-cell>
+    </ng-container>
+
+    <!-- <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row> -->
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">There is no product named: "{{input.value}}"</td>
+    </tr>
+
+
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+		<mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="element-row" [cdkDetailRow]="row" [cdkDetailRowTpl]="tpl">
+		</mat-row>
+  </table>
+
+  <ng-template #tpl let-element>
+  	<div class="mat-row detail-row" [@detailExpand] style="overflow: hidden">
+
+      <label class="card-text">
+        <strong>Quantity: </strong>
+        <input [(ngModel)]=count
+               (change)="validateCount()"
+               type="number"
+               name="count"
+               required
+               min="1"
+               [max]=productInfo?.productStock
+        >
+      </label>
+
+    </div>
+  </ng-template>
+
+
+
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 </div>

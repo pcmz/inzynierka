@@ -2,6 +2,7 @@ import { ProductService } from '../product.service';
 import { Product } from '../product';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-create-product',
@@ -39,4 +40,7 @@ export class CreateProductComponent implements OnInit {
   gotoList() {
     this.router.navigate(['/products']);
   }
+
+// -------------------------------------------------------------------
+
 }

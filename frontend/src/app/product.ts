@@ -1,7 +1,14 @@
+import { Supplier } from "./supplier";
+
 export class Product {
     id: number;
     productName: string;
-    quantity: string;
-    unitPrice: string;
-    active: boolean;
+    unit: string;
+    supplier: Supplier;
+    quantityPerUnit: string;
+    unitPrice: number;
+    ipath: string;
+    availableColours: string;
+    quantity: number;
+    // active: boolean
 }

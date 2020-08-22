@@ -13,7 +13,7 @@ export class UpdateProductComponent implements OnInit {
   id: number;
   product: Product;
 
-  constructor(private route: ActivatedRoute,private router: Router,
+  constructor(private route: ActivatedRoute, private router: Router,
     private productService: ProductService) { }
 
   ngOnInit() {

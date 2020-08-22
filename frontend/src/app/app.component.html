@@ -7,6 +7,12 @@
     <li class="nav-item">
         <a routerLink="add" class="nav-link" routerLinkActive="active">Add Product</a>
     </li>
+    <li class="nav-item">
+        <a routerLink="carts" class="nav-link" routerLinkActive="active">Cart</a>
+    </li>
+    <li class="nav-item">
+        <a routerLink="orders" class="nav-link" routerLinkActive="active">Order</a>
+    </li>
   </ul>
 </nav>
 <div class="container">
@@ -17,8 +23,33 @@
     <div class="card-body">
   <router-outlet></router-outlet>
 
+<div *ngIf="router.url === '/'">
+  <ngb-carousel>
+    <ng-template ngbSlide>
+      <div class="picsum-img-wrapper">
+        <img src="assets/images/0.jpg" alt="Random first slide">
+      </div>
+    </ng-template>
+    <ng-template ngbSlide>
+      <div class="picsum-img-wrapper">
+        <img src="assets/images/1.jpg" alt="Random second slide">
+      </div>
+    </ng-template>
+    <ng-template ngbSlide>
+      <div class="picsum-img-wrapper">
+        <img src="assets/images/2.jpg" alt="Random third slide">
+      </div>
+    </ng-template>
+    <ng-template ngbSlide>
+      <div class="picsum-img-wrapper">
+        <img src="assets/images/3.jpg" alt="Random fourth slide">
+      </div>
+    </ng-template>
+</ngb-carousel>
+</div>
+
   <br/> <br/>
-  <div class="container container-fluid">
+  <div class="container container-fluid" style="float: left">
     <h5><a [routerLink]="['/logout']">Logout</a></h5>
   </div>
 

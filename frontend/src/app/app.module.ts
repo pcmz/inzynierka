@@ -14,8 +14,27 @@ import { CreateProductComponent } from './create-product/create-product.componen
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { UpdateProductComponent } from './update-product/update-product.component';
+import { CartComponent } from './cart/cart.component';
+import { OrderComponent } from './order/order.component';
+import { OrderDetailsComponent } from './order_details/order_details.component';
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CommonModule } from '@angular/common';
+import { RouterModule, Routes } from '@angular/router';
 
 import {LogoutComponent} from "./logout/logout.component";
+
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatIconModule } from '@angular/material/icon';
+
+import {CdkDetailRowDirective} from './product-list/cdk-detail-row.directive';
+import { CdkTableModule } from '@angular/cdk/table';
+
 
 export function kcFactory(keycloakService: KeycloakService) {
   return () => keycloakService.init();
@@ -29,6 +48,11 @@ export function kcFactory(keycloakService: KeycloakService) {
     ProductListComponent,
     UpdateProductComponent,
     LogoutComponent,
+    CdkDetailRowDirective,
+    CartComponent,
+    OrderComponent,
+    OrderDetailsComponent
+
   ],
   imports: [
     BrowserModule,
@@ -36,7 +60,20 @@ export function kcFactory(keycloakService: KeycloakService) {
     AppRoutingModule,
     HttpClientModule,
     NgxSpinnerModule,
-    FormsModule
+    FormsModule,
+    NgbModule,
+    CommonModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    BrowserAnimationsModule,
+    MatIconModule,
+    RouterModule,
+    CdkTableModule
+
+
   ],
   providers: [
     KeycloakService,

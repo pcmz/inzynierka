@@ -1,0 +1,16 @@
+img {
+  width: 200px;
+  height: 200px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*#to_left {
+  float: left;
+}
+
+#to_right {
+  float: right;
+  margin-left: 300px;
+}*/

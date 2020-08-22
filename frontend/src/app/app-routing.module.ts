@@ -1,8 +1,13 @@
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { CreateProductComponent } from './create-product/create-product.component';
+
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ProductListComponent } from './product-list/product-list.component';
+import { CartComponent } from './cart/cart.component';
+import { OrderComponent } from './order/order.component';
+import { OrderDetailsComponent } from './order_details/order_details.component';
+
 import { UpdateProductComponent } from './update-product/update-product.component';
 import {LogoutComponent} from "./logout/logout.component";
 
@@ -12,6 +17,11 @@ const routes: Routes = [
   { path: 'add', component: CreateProductComponent },
   { path: 'update/:id', component: UpdateProductComponent },
   { path: 'details/:id', component: ProductDetailsComponent },
+  { path: 'carts', component: CartComponent },
+  { path: 'carts/:id', component: CartComponent },
+  { path: 'order_details/:id', component: OrderDetailsComponent },
+  { path: 'orders', component: OrderComponent },
+
   {
     path: 'logout',
     component:LogoutComponent

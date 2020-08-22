@@ -1,18 +1,53 @@
-<h2>Product Details</h2>
+<h3>Product Details</h3>
 
 <hr/>
-<div *ngIf="product">
+<div *ngIf="product" style="float: left">
   <div>
     <label><b>Product Name: </b></label> {{product.productName}}
   </div>
   <div>
-    <label><b>Quantity: </b></label> {{product.quantity}}
+    <label><b>Unit: </b></label> {{product.unit}}
   </div>
   <div>
-    <label><b>Unit Price: </b></label> {{product.unitPrice}}
+    <label><b>Quantity per unit: </b></label> {{product.quantityPerUnit}}
   </div>
+  <div>
+    <label><b>Unit Price: </b></label> {{product.unitPrice}} <label> zl gross </label>
+  </div>
+  <div>
+    <label><b>Quantity: </b></label> {{product.quantity}} <label>  m2 (or) lm </label>
+  </div>
+  <!-- <div>
+    <label><b>Supplier: </b></label> {{product.supplier.companyName}}
+  </div> -->
+  <div>
+    <label><b>Available colours: </b></label> {{product.availableColours}}
+  </div>
+</div>
+
+<div>
+  <img src={{product.ipath}}>
 </div>
 
 <br>
 <br>
 <button (click)="list()" class="btn btn-primary">Back to Product List</button><br>
+
+
+<!-- cart -->
+<br>
+<br>
+<form name="form" #form='ngForm' (ngSubmit)="addToCart()">
+  <label class="card-text">
+    <strong>Quantity to order: </strong>
+    <input [(ngModel)]=count
+          (change)="validateCount()"
+          type="number"
+          name="count"
+          required
+          min="1"
+          [max]=product?.quantity>
+  </label>
+  <br>
+  <button type="submit" class="btn btn-primary"> Add to Cart </button>
+</form>

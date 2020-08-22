@@ -1,0 +1,45 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h2>Cart</h2>
+  </div>
+  <div class="panel-body">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Product name</th>
+          <th>Unit price [zl gross]</th>
+          <th>Quantity [m2 (lm)]</th>
+          <th>Subtotal [zl gross]</th>
+          <th>Remove</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cart of carts | async">
+          <td>{{cart.id}}</td>
+          <td><img src={{cart.product.ipath}} class="mr-2" style="width: 40px"> {{cart.product.productName}}</td>
+          <td>{{cart.product.unitPrice}}</td>
+          <td>{{cart.quantity}}</td>
+          <td>{{cart.subtotal | number:'1.2-2'}}</td>
+          <td><button id=remove (click)="deleteCarts(cart.id)">Remove</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div>
+        <h5 style="display: inline;">Total: {{total | number:'1.2-2'}} zl</h5>
+    </div>
+  </div>
+</div>
+
+<br>
+<br>
+<form [formGroup]="countryForm" (ngSubmit)="callall()">
+ <h6>Select a customer:</h6>
+ <select formControlName="countryControl">
+   <option [ngValue]="cust" *ngFor="let cust of customerArray">{{cust.companyName}}</option>
+ </select>
+ <br>
+ <br>
+ <button type="submit" class="btn btn-primary"> Complete the order </button>
+</form>
