@@ -3,7 +3,6 @@ package pl.agh.student.pcmz.pracainzynierska.models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -48,6 +47,9 @@ public class Product implements Serializable {
 
     @Column(name = "Quantity", length = 11)
     private Integer quantity;
+
+    @Column(name = "VAT", length = 3)
+    private Integer vat;
 
 //    @Column(name = "UnitsInStock", length = 6, columnDefinition = "SMALLINT")
 //    private Short unitsInStock;

@@ -7,7 +7,7 @@
 -- Server version: 4.1.22
 -- PHP Version: 4.4.7
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 
 --
 -- Database: `nw_old`
@@ -19,27 +19,30 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Table structure for table `categories`
 --
 
-CREATE TABLE IF NOT EXISTS `categories` (
-  `CategoryID` int(11) NOT NULL auto_increment,
-  `CategoryName` varchar(15) default NULL,
-  `Description` text,
-  `Picture` varchar(40) default NULL,
-  PRIMARY KEY  (`CategoryID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+CREATE TABLE IF NOT EXISTS `categories`
+(
+    `CategoryID`   int(11) NOT NULL auto_increment,
+    `CategoryName` varchar(15) default NULL,
+    `Description`  text,
+    `Picture`      varchar(40) default NULL,
+    PRIMARY KEY (`CategoryID`)
+) ENGINE = MyISAM
+  DEFAULT CHARSET = latin1
+  AUTO_INCREMENT = 9;
 
 --
 -- Dumping data for table `categories`
 --
 
-INSERT INTO `categories` (`CategoryID`, `CategoryName`, `Description`, `Picture`) VALUES
-(1, 'Beverages', 'Soft drinks, coffees, teas, beers, and ales', NULL),
-(2, 'Condiments', 'Sweet and savory sauces, relishes, spreads, and seasonings', ''),
-(3, 'Confections', 'Desserts, candies, and sweet breads', ''),
-(4, 'Dairy Products', 'Cheeses', ''),
-(5, 'Grains/Cereals', 'Breads, crackers, pasta, and cereal', ''),
-(6, 'Meat/Poultry', 'Prepared meats', ''),
-(7, 'Produce', 'Dried fruit and bean curd', ''),
-(8, 'Seafood', 'Seaweed and fish', '');
+INSERT INTO `categories` (`CategoryID`, `CategoryName`, `Description`, `Picture`)
+VALUES (1, 'Beverages', 'Soft drinks, coffees, teas, beers, and ales', NULL),
+       (2, 'Condiments', 'Sweet and savory sauces, relishes, spreads, and seasonings', ''),
+       (3, 'Confections', 'Desserts, candies, and sweet breads', ''),
+       (4, 'Dairy Products', 'Cheeses', ''),
+       (5, 'Grains/Cereals', 'Breads, crackers, pasta, and cereal', ''),
+       (6, 'Meat/Poultry', 'Prepared meats', ''),
+       (7, 'Produce', 'Dried fruit and bean curd', ''),
+       (8, 'Seafood', 'Seaweed and fish', '');
 
 -- --------------------------------------------------------
 
@@ -47,30 +50,34 @@ INSERT INTO `categories` (`CategoryID`, `CategoryName`, `Description`, `Picture`
 -- Table structure for table `customers`
 --
 
-CREATE TABLE IF NOT EXISTS `customers` (
-  `CustomerID` int(11) NOT NULL auto_increment,
-  `CompanyName` varchar(40) default NULL,
+CREATE TABLE IF NOT EXISTS `customers`
+(
+    `CustomerID`  int(11) NOT NULL auto_increment,
+    `CompanyName` varchar(40) default NULL,
 #   `ContactName` varchar(30) default NULL,
 #   `ContactTitle` varchar(30) default NULL,
-#   `Address` varchar(60) default NULL,
+    `Address`     varchar(60) default NULL,
 #   `City` varchar(15) default NULL,
 #   `Region` varchar(15) default NULL,
 #   `PostalCode` varchar(10) default NULL,
 #   `Country` varchar(15) default NULL,
 #   `Phone` varchar(24) default NULL,
 #   `Fax` varchar(24) default NULL,
-  PRIMARY KEY  (`CustomerID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+    `NIP`         varchar(10) default NULL,
+    PRIMARY KEY (`CustomerID`)
+) ENGINE = MyISAM
+  DEFAULT CHARSET = latin1
+  AUTO_INCREMENT = 1;
 
 --
 -- Dumping data for table `customers`
 --
 
 # INSERT INTO `customers` (`CustomerID`, `CompanyName`, `ContactName`, `ContactTitle`, `Address`, `City`, `Region`, `PostalCode`, `Country`, `Phone`, `Fax`) VALUES
-INSERT INTO `customers` (`CustomerID`, `CompanyName`) VALUES
-(1, 'Jan Kowalski sp. z.o.o'),
-(2, 'Jan Nowak sp. z.o.o'),
-(3, 'Bud-bud sp. z.o.o');
+INSERT INTO `customers` (`CustomerID`, `CompanyName`, `Address`, `NIP`)
+VALUES (1, 'Jan Kowalski sp. z.o.o', 'ul. Kowalskiego 1, Krakow 30-383', '6762281710'),
+       (2, 'Jan Nowak sp. z.o.o', 'ul. Nowaka 123, Krakow 30-123', '6750002236'),
+       (3, 'Bud-bud sp. z.o.o', 'Al. A. Mickiewicza 30, Pawilon D-17, Krakow 30-059', '6750006257');
 # ('AROUT', 'Around the Horn', 'Thomas Hardy', 'Sales Representative', '120 Hanover Sq.', 'London', '', 'WA1 1DP', 'United Kingdom', '(171) 555-7788', '(171) 555-6750'),
 # ('BERGS', 'Berglunds snabbk?p', 'Christina Berglund', 'Order Administrator', 'Berguvsv?gen  8', 'Lule?', '', 'S-958 22', 'Sweden', '0921-12 34 65', '0921-12 34 67'),
 # ('BLAUS', 'Blauer See Delikatessen', 'Hanna Moos', 'Sales Representative', 'Forsterstr. 57', 'Mannheim', '', '68306', 'Germany', '0621-08460', '0621-08924'),
@@ -166,41 +173,72 @@ INSERT INTO `customers` (`CustomerID`, `CompanyName`) VALUES
 -- Table structure for table `employees`
 --
 
-CREATE TABLE IF NOT EXISTS `employees` (
-  `EmployeeID` int(11) NOT NULL auto_increment,
-  `LastName` varchar(20) default NULL,
-  `FirstName` varchar(10) default NULL,
-  `Title` varchar(30) default NULL,
-  `TitleOfCourtesy` varchar(25) default NULL,
-  `BirthDate` date default NULL,
-  `HireDate` date default NULL,
-  `Address` varchar(60) default NULL,
-  `City` varchar(15) default NULL,
-  `Region` varchar(15) default NULL,
-  `PostalCode` varchar(10) default NULL,
-  `Country` varchar(15) default NULL,
-  `HomePhone` varchar(24) default NULL,
-  `Extension` varchar(4) default NULL,
-  `Photo` varchar(40) default NULL,
-  `Notes` text,
-  `ReportsTo` int(11) default NULL,
-  PRIMARY KEY  (`EmployeeID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+CREATE TABLE IF NOT EXISTS `employees`
+(
+    `EmployeeID`      int(11) NOT NULL auto_increment,
+    `LastName`        varchar(20) default NULL,
+    `FirstName`       varchar(10) default NULL,
+    `Title`           varchar(30) default NULL,
+    `TitleOfCourtesy` varchar(25) default NULL,
+    `BirthDate`       date        default NULL,
+    `HireDate`        date        default NULL,
+    `Address`         varchar(60) default NULL,
+    `City`            varchar(15) default NULL,
+    `Region`          varchar(15) default NULL,
+    `PostalCode`      varchar(10) default NULL,
+    `Country`         varchar(15) default NULL,
+    `HomePhone`       varchar(24) default NULL,
+    `Extension`       varchar(4)  default NULL,
+    `Photo`           varchar(40) default NULL,
+    `Notes`           text,
+    `ReportsTo`       int(11)     default NULL,
+    PRIMARY KEY (`EmployeeID`)
+) ENGINE = MyISAM
+  DEFAULT CHARSET = latin1
+  AUTO_INCREMENT = 10;
 
 --
 -- Dumping data for table `employees`
 --
 
-INSERT INTO `employees` (`EmployeeID`, `LastName`, `FirstName`, `Title`, `TitleOfCourtesy`, `BirthDate`, `HireDate`, `Address`, `City`, `Region`, `PostalCode`, `Country`, `HomePhone`, `Extension`, `Photo`, `Notes`, `ReportsTo`) VALUES
-(1, 'Davolio', 'Nancy', 'Sales Representative', 'Ms.', '1968-12-08', '1992-05-01', '507 - 20th Ave. E.\r\nApt. 2A', 'Seattle', 'WA', '98122', 'United States', '(206) 555-9857', '5467', '', 'Education includes a BA in psychology from Colorado State University.  She also completed "The Art of the Cold Call."  Nancy is a member of Toastmasters International.', 2),
-(2, 'Fuller', 'Andrew', 'Vice President, Sales', 'Dr.', '1952-02-19', '1992-08-14', '908 W. Capital Way', 'Tacoma', 'WA', '98401', 'United States', '(206) 555-9482', '3457', '', 'Andrew received his BTS commercial and a Ph.D. in international marketing from the University of Dallas.  He is fluent in French and Italian and reads German.  He joined the company as a sales representative, was promoted to sales manager and was then named vice president of sales.  Andrew is a member of the Sales Management Roundtable, the Seattle Chamber of Commerce, and the Pacific Rim Importers Association.', 0),
-(3, 'Leverling', 'Janet', 'Sales Representative', 'Ms.', '1963-08-30', '1992-04-01', '722 Moss Bay Blvd.', 'Kirkland', 'WA', '98033', 'United States', '(206) 555-3412', '3355', '', 'Janet has a BS degree in chemistry from Boston College).  She has also completed a certificate program in food retailing management.  Janet was hired as a sales associate and was promoted to sales representative.', 2),
-(4, 'Peacock', 'Margaret', 'Sales Representative', 'Mrs.', '1958-09-19', '1993-05-03', '4110 Old Redmond Rd.', 'Redmond', 'WA', '98052', 'United States', '(206) 555-8122', '5176', '', 'Margaret holds a BA in English literature from Concordia College and an MA from the American Institute of Culinary Arts. She was temporarily assigned to the London office before returning to her permanent post in Seattle.', 2),
-(5, 'Buchanan', 'Steven', 'Sales Manager', 'Mr.', '1955-03-04', '1993-10-17', '14 Garrett Hill', 'London', '', 'SW1 8JR', 'United Kingdom', '(71) 555-4848', '3453', '', 'Steven Buchanan graduated from St. Andrews University, Scotland, with a BSC degree.  Upon joining the company as a sales representative, he spent 6 months in an orientation program at the Seattle office and then returned to his permanent post in London, where he was promoted to sales manager.  Mr. Buchanan has completed the courses "Successful Telemarketing" and "International Sales Management."  He is fluent in French.', 2),
-(6, 'Suyama', 'Michael', 'Sales Representative', 'Mr.', '1963-07-02', '1993-10-17', 'Coventry House\r\nMiner Rd.', 'London', '', 'EC2 7JR', 'United Kingdom', '(71) 555-7773', '428', '', 'Michael is a graduate of Sussex University (MA, economics) and the University of California at Los Angeles (MBA, marketing).  He has also taken the courses "Multi-Cultural Selling" and "Time Management for the Sales Professional."  He is fluent in Japanese and can read and write French, Portuguese, and Spanish.', 5),
-(7, 'King', 'Robert', 'Sales Representative', 'Mr.', '1960-05-29', '1994-01-02', 'Edgeham Hollow\r\nWinchester Way', 'London', '', 'RG1 9SP', 'United Kingdom', '(71) 555-5598', '465', '', 'Robert King served in the Peace Corps and traveled extensively before completing his degree in English at the University of Michigan and then joining the company.  After completing a course entitled "Selling in Europe," he was transferred to the London office.', 5),
-(8, 'Callahan', 'Laura', 'Inside Sales Coordinator', 'Ms.', '1958-01-09', '1994-03-05', '4726 - 11th Ave. N.E.', 'Seattle', 'WA', '98105', 'United States', '(206) 555-1189', '2344', '', 'Laura received a BA in psychology from the University of Washington.  She has also completed a course in business French.  She reads and writes French.', 2),
-(9, 'Dodsworth', 'Anne', 'Sales Representative', 'Ms.', '1969-07-02', '1994-11-15', '7 Houndstooth Rd.', 'London', '', 'WG2 7LT', 'United Kingdom', '(71) 555-4444', '452', '', 'Anne has a BA degree in English from St. Lawrence College.  She is fluent in French and German.', 5);
+INSERT INTO `employees` (`EmployeeID`, `LastName`, `FirstName`, `Title`, `TitleOfCourtesy`, `BirthDate`, `HireDate`,
+                         `Address`, `City`, `Region`, `PostalCode`, `Country`, `HomePhone`, `Extension`, `Photo`,
+                         `Notes`, `ReportsTo`)
+VALUES (1, 'Davolio', 'Nancy', 'Sales Representative', 'Ms.', '1968-12-08', '1992-05-01',
+        '507 - 20th Ave. E.\r\nApt. 2A', 'Seattle', 'WA', '98122', 'United States', '(206) 555-9857', '5467', '',
+        'Education includes a BA in psychology from Colorado State University.  She also completed "The Art of the Cold Call."  Nancy is a member of Toastmasters International.',
+        2),
+       (2, 'Fuller', 'Andrew', 'Vice President, Sales', 'Dr.', '1952-02-19', '1992-08-14', '908 W. Capital Way',
+        'Tacoma', 'WA', '98401', 'United States', '(206) 555-9482', '3457', '',
+        'Andrew received his BTS commercial and a Ph.D. in international marketing from the University of Dallas.  He is fluent in French and Italian and reads German.  He joined the company as a sales representative, was promoted to sales manager and was then named vice president of sales.  Andrew is a member of the Sales Management Roundtable, the Seattle Chamber of Commerce, and the Pacific Rim Importers Association.',
+        0),
+       (3, 'Leverling', 'Janet', 'Sales Representative', 'Ms.', '1963-08-30', '1992-04-01', '722 Moss Bay Blvd.',
+        'Kirkland', 'WA', '98033', 'United States', '(206) 555-3412', '3355', '',
+        'Janet has a BS degree in chemistry from Boston College).  She has also completed a certificate program in food retailing management.  Janet was hired as a sales associate and was promoted to sales representative.',
+        2),
+       (4, 'Peacock', 'Margaret', 'Sales Representative', 'Mrs.', '1958-09-19', '1993-05-03', '4110 Old Redmond Rd.',
+        'Redmond', 'WA', '98052', 'United States', '(206) 555-8122', '5176', '',
+        'Margaret holds a BA in English literature from Concordia College and an MA from the American Institute of Culinary Arts. She was temporarily assigned to the London office before returning to her permanent post in Seattle.',
+        2),
+       (5, 'Buchanan', 'Steven', 'Sales Manager', 'Mr.', '1955-03-04', '1993-10-17', '14 Garrett Hill', 'London', '',
+        'SW1 8JR', 'United Kingdom', '(71) 555-4848', '3453', '',
+        'Steven Buchanan graduated from St. Andrews University, Scotland, with a BSC degree.  Upon joining the company as a sales representative, he spent 6 months in an orientation program at the Seattle office and then returned to his permanent post in London, where he was promoted to sales manager.  Mr. Buchanan has completed the courses "Successful Telemarketing" and "International Sales Management."  He is fluent in French.',
+        2),
+       (6, 'Suyama', 'Michael', 'Sales Representative', 'Mr.', '1963-07-02', '1993-10-17',
+        'Coventry House\r\nMiner Rd.', 'London', '', 'EC2 7JR', 'United Kingdom', '(71) 555-7773', '428', '',
+        'Michael is a graduate of Sussex University (MA, economics) and the University of California at Los Angeles (MBA, marketing).  He has also taken the courses "Multi-Cultural Selling" and "Time Management for the Sales Professional."  He is fluent in Japanese and can read and write French, Portuguese, and Spanish.',
+        5),
+       (7, 'King', 'Robert', 'Sales Representative', 'Mr.', '1960-05-29', '1994-01-02',
+        'Edgeham Hollow\r\nWinchester Way', 'London', '', 'RG1 9SP', 'United Kingdom', '(71) 555-5598', '465', '',
+        'Robert King served in the Peace Corps and traveled extensively before completing his degree in English at the University of Michigan and then joining the company.  After completing a course entitled "Selling in Europe," he was transferred to the London office.',
+        5),
+       (8, 'Callahan', 'Laura', 'Inside Sales Coordinator', 'Ms.', '1958-01-09', '1994-03-05', '4726 - 11th Ave. N.E.',
+        'Seattle', 'WA', '98105', 'United States', '(206) 555-1189', '2344', '',
+        'Laura received a BA in psychology from the University of Washington.  She has also completed a course in business French.  She reads and writes French.',
+        2),
+       (9, 'Dodsworth', 'Anne', 'Sales Representative', 'Ms.', '1969-07-02', '1994-11-15', '7 Houndstooth Rd.',
+        'London', '', 'WG2 7LT', 'United Kingdom', '(71) 555-4444', '452', '',
+        'Anne has a BA degree in English from St. Lawrence College.  She is fluent in French and German.', 5);
 
 -- --------------------------------------------------------
 
@@ -208,9 +246,10 @@ INSERT INTO `employees` (`EmployeeID`, `LastName`, `FirstName`, `Title`, `TitleO
 -- Table structure for table `orders`
 --
 
-CREATE TABLE IF NOT EXISTS `orders` (
-  `OrderID` int(11) NOT NULL auto_increment,
-  `CustomerID` varchar(5) default NULL,
+CREATE TABLE IF NOT EXISTS `orders`
+(
+    `OrderID`    int(11) NOT NULL auto_increment,
+    `CustomerID` varchar(5) default NULL,
 #   `EmployeeID` int(11) default NULL,
 #   `OrderDate` date default NULL,
 #   `RequiredDate` date default NULL,
@@ -223,8 +262,10 @@ CREATE TABLE IF NOT EXISTS `orders` (
 #   `ShipRegion` varchar(15) default NULL,
 #   `ShipPostalCode` varchar(10) default NULL,
 #   `ShipCountry` varchar(15) default NULL,
-  PRIMARY KEY  (`OrderID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+    PRIMARY KEY (`OrderID`)
+) ENGINE = MyISAM
+  DEFAULT CHARSET = latin1
+  AUTO_INCREMENT = 1;
 
 --
 -- Dumping data for table `orders`
@@ -1068,19 +1109,51 @@ CREATE TABLE IF NOT EXISTS `orders` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `invoices`
+--
+
+CREATE TABLE IF NOT EXISTS `invoices`
+(
+    `ID`          int(11) NOT NULL auto_increment,
+    `OrderID`     int(11)     default NULL,
+    `FakturaXlID` varchar(40) default NULL,
+    `InvoiceName` varchar(40) default NULL,
+#   `EmployeeID` int(11) default NULL,
+#   `OrderDate` date default NULL,
+#   `RequiredDate` date default NULL,
+#   `ShippedDate` date default NULL,
+#   `ShipVia` int(11) default NULL,
+#   `Freight` float(1,0) default '0',
+#   `ShipName` varchar(40) default NULL,
+#   `ShipAddress` varchar(60) default NULL,
+#   `ShipCity` varchar(15) default NULL,
+#   `ShipRegion` varchar(15) default NULL,
+#   `ShipPostalCode` varchar(10) default NULL,
+#   `ShipCountry` varchar(15) default NULL,
+    PRIMARY KEY (`ID`)
+) ENGINE = MyISAM
+  DEFAULT CHARSET = latin1
+  AUTO_INCREMENT = 1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `carts`
 --
 
-CREATE TABLE IF NOT EXISTS `carts` (
-`odID` int(11) NOT NULL auto_increment,
+CREATE TABLE IF NOT EXISTS `carts`
+(
+    `odID`      int(11) NOT NULL auto_increment,
 #   `OrderID` int(11) default '0',
-`ProductID` int(11) default NULL,
+    `ProductID` int(11)     default NULL,
 #   `UnitPrice` float(1,0) default '0',
-`Quantity` smallint(6) default NULL,
+    `Quantity`  smallint(6) default NULL,
 #   `Discount` float(1,0) default '0',
-`Subtotal` float(11) default '0',
-PRIMARY KEY  (`odID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+    `Subtotal`  float(11)   default '0',
+    PRIMARY KEY (`odID`)
+) ENGINE = MyISAM
+  DEFAULT CHARSET = latin1
+  AUTO_INCREMENT = 1;
 
 --
 -- Dumping data for table `carts`
@@ -1096,17 +1169,20 @@ PRIMARY KEY  (`odID`)
 -- Table structure for table `order_details`
 --
 
-CREATE TABLE IF NOT EXISTS `order_details` (
-  `odID` int(11) NOT NULL auto_increment,
-  `OrderID` int(11) default NULL,
-  `ProductID` int(11) default NULL,
+CREATE TABLE IF NOT EXISTS `order_details`
+(
+    `odID`      int(11) NOT NULL auto_increment,
+    `OrderID`   int(11)     default NULL,
+    `ProductID` int(11)     default NULL,
 #   `UnitPrice` float(1,0) default '0',
-  `Quantity` smallint(6) default NULL,
+    `Quantity`  smallint(6) default NULL,
 #   `Discount` float(1,0) default '0',
-  `Subtotal` float(11) default '0',
+    `Subtotal`  float(11)   default '0',
 
-  PRIMARY KEY  (`odID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+    PRIMARY KEY (`odID`)
+) ENGINE = MyISAM
+  DEFAULT CHARSET = latin1
+  AUTO_INCREMENT = 1;
 
 --
 -- Dumping data for table `order_details`
@@ -3277,44 +3353,49 @@ CREATE TABLE IF NOT EXISTS `order_details` (
 -- Table structure for table `products`
 --
 
-CREATE TABLE IF NOT EXISTS `products` (
-  `ProductID` int(11) NOT NULL auto_increment,
-  `ProductName` varchar(40) default NULL,
-  `Unit` varchar(40) default NULL,
-  `SupplierID` int(11) default NULL,
+CREATE TABLE IF NOT EXISTS `products`
+(
+    `ProductID`        int(11) NOT NULL auto_increment,
+    `ProductName`      varchar(40)  default NULL,
+    `Unit`             varchar(40)  default NULL,
+    `SupplierID`       int(11)      default NULL,
 #   `CategoryID` int(11) default NULL,
-  `QuantityPerUnit` varchar(20) default NULL,
-  `UnitPrice` float(11) default '0',
-  `Ipath` varchar(250) default NULL,
-  `AvailableColours` varchar(40) default NULL,
-  `Quantity` int(11) default NULL,
+    `QuantityPerUnit`  varchar(20)  default NULL,
+    `UnitPrice`        float(11)    default '0',
+    `Ipath`            varchar(250) default NULL,
+    `AvailableColours` varchar(40)  default NULL,
+    `Quantity`         int(11)      default NULL,
 #   `UnitsInStock` smallint(6) default '0',
 #   `UnitsOnOrder` smallint(6) default '0',
 #   `ReorderLevel` smallint(6) default '0',
 #   `Discontinued` tinyint(1) default '0',
-  PRIMARY KEY  (`ProductID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+    `VAT`              int(3)       default '23',
+    PRIMARY KEY (`ProductID`)
+) ENGINE = MyISAM
+  DEFAULT CHARSET = latin1
+  AUTO_INCREMENT = 1;
 
 --
 -- Dumping data for table `products`
 --
 
 # INSERT INTO `products` (`ProductID`, `ProductName`, `SupplierID`, `CategoryID`, `QuantityPerUnit`, `UnitPrice`, `UnitsInStock`, `UnitsOnOrder`, `ReorderLevel`, `Discontinued`) VALUES
-INSERT INTO `products` (`ProductID`, `ProductName`, `Unit`, `SupplierID`, `QuantityPerUnit`, `UnitPrice`, Ipath, AvailableColours, Quantity) VALUES
-(1, 'Cobble 10x20x4cm', 'm2', 1,'52 pieces', 20.92, 'assets/details/cobble.JPG', 'grey, red, yellow', 1000),
-(2, 'Cobble 10x20x6cm', 'm2', 1,'52 pieces', 21.56, 'assets/details/cobble.JPG', 'grey, red, yellow', 900),
-(3, 'Cobble 10x20x8cm', 'm2', 1,'52 pieces', 22.12, 'assets/details/cobble.JPG', 'grey, red, yellow', 1200),
-(4, 'Edge 6x20x100cm', 'lm', 2,  '1 piece', 10.12, 'assets/details/edge.JPG', 'grey', 850),
-(5, 'Edge 6x25x100cm', 'lm', 2,  '1 piece', 11.25, 'assets/details/edge.JPG', 'grey', 450),
-(6, 'Edge 8x25x100cm', 'lm', 2,  '1 piece', 12.31, 'assets/details/edge.JPG', 'grey', 1500),
-(7, 'Edge 8x30x100cm', 'lm', 2,  '1 piece', 13.89, 'assets/details/edge.JPG', 'grey', 120),
-(8, 'Edge 6x20x50cm', 'lm', 2,  '2 pieces', 11.42, 'assets/details/edge.JPG', 'grey', 45),
-(9, 'Edge 6x25x50cm', 'lm', 2,  '2 pieces', 12.55, 'assets/details/edge.JPG', 'grey', 120),
-(10, 'Edge 8x25x50cm', 'lm', 2,  '2 pieces', 13.61, 'assets/details/edge.JPG', 'grey', 180),
-(11, 'Edge 8x30x50cm', 'lm', 2,  '2 pieces', 15.19, 'assets/details/edge.JPG', 'grey', 200),
-(12, 'Kerb 15x30x100cm ', 'lm', 3,  '1 piece', 26.46, 'assets/details/kerb.JPG', 'grey', 890),
-(13, 'Kerb 20x30x100cm ', 'lm', 3,  '1 piece', 27.72, 'assets/details/kerb.JPG', 'grey', 150),
-(14, 'Kerb 25x30x100cm ', 'lm', 3,  '1 piece', 28.36, 'assets/details/kerb.JPG', 'grey', 490);
+INSERT INTO `products` (`ProductID`, `ProductName`, `Unit`, `SupplierID`, `QuantityPerUnit`, `UnitPrice`, Ipath,
+                        AvailableColours, Quantity, VAT)
+VALUES (1, 'Cobble 10x20x4cm', 'm2', 1, '52 pieces', 20.92, 'assets/details/cobble.JPG', 'grey, red, yellow', 1000, 23),
+       (2, 'Cobble 10x20x6cm', 'm2', 1, '52 pieces', 21.56, 'assets/details/cobble.JPG', 'grey, red, yellow', 900, 23),
+       (3, 'Cobble 10x20x8cm', 'm2', 1, '52 pieces', 22.12, 'assets/details/cobble.JPG', 'grey, red, yellow', 1200, 23),
+       (4, 'Edge 6x20x100cm', 'lm', 2, '1 piece', 10.12, 'assets/details/edge.JPG', 'grey', 850, 23),
+       (5, 'Edge 6x25x100cm', 'lm', 2, '1 piece', 11.25, 'assets/details/edge.JPG', 'grey', 450, 23),
+       (6, 'Edge 8x25x100cm', 'lm', 2, '1 piece', 12.31, 'assets/details/edge.JPG', 'grey', 1500, 23),
+       (7, 'Edge 8x30x100cm', 'lm', 2, '1 piece', 13.89, 'assets/details/edge.JPG', 'grey', 120, 23),
+       (8, 'Edge 6x20x50cm', 'lm', 2, '2 pieces', 11.42, 'assets/details/edge.JPG', 'grey', 45, 23),
+       (9, 'Edge 6x25x50cm', 'lm', 2, '2 pieces', 12.55, 'assets/details/edge.JPG', 'grey', 120, 23),
+       (10, 'Edge 8x25x50cm', 'lm', 2, '2 pieces', 13.61, 'assets/details/edge.JPG', 'grey', 180, 23),
+       (11, 'Edge 8x30x50cm', 'lm', 2, '2 pieces', 15.19, 'assets/details/edge.JPG', 'grey', 200, 23),
+       (12, 'Kerb 15x30x100cm ', 'lm', 3, '1 piece', 26.46, 'assets/details/kerb.JPG', 'grey', 890, 23),
+       (13, 'Kerb 20x30x100cm ', 'lm', 3, '1 piece', 27.72, 'assets/details/kerb.JPG', 'grey', 150, 23),
+       (14, 'Kerb 25x30x100cm ', 'lm', 3, '1 piece', 28.36, 'assets/details/kerb.JPG', 'grey', 490, 23);
 # (4, 'Cobble', 'm2', 1,'52 pieces', 20.92),
 # (5, 'Edge', 'lm', 1,  '1 piece', 10.12),
 # (6, 'Kerb', 'lm', 1,  '1 piece', 16.52),
@@ -3396,21 +3477,24 @@ INSERT INTO `products` (`ProductID`, `ProductName`, `Unit`, `SupplierID`, `Quant
 -- Table structure for table `shippers`
 --
 
-CREATE TABLE IF NOT EXISTS `shippers` (
-  `ShipperID` int(11) NOT NULL auto_increment,
-  `CompanyName` varchar(40) default NULL,
-  `Phone` varchar(24) default NULL,
-  PRIMARY KEY  (`ShipperID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+CREATE TABLE IF NOT EXISTS `shippers`
+(
+    `ShipperID`   int(11) NOT NULL auto_increment,
+    `CompanyName` varchar(40) default NULL,
+    `Phone`       varchar(24) default NULL,
+    PRIMARY KEY (`ShipperID`)
+) ENGINE = MyISAM
+  DEFAULT CHARSET = latin1
+  AUTO_INCREMENT = 4;
 
 --
 -- Dumping data for table `shippers`
 --
 
-INSERT INTO `shippers` (`ShipperID`, `CompanyName`, `Phone`) VALUES
-(1, 'Speedy Express', '(503) 555-9831'),
-(2, 'United Package', '(503) 555-3199'),
-(3, 'Federal Shipping', '(503) 555-9931');
+INSERT INTO `shippers` (`ShipperID`, `CompanyName`, `Phone`)
+VALUES (1, 'Speedy Express', '(503) 555-9831'),
+       (2, 'United Package', '(503) 555-3199'),
+       (3, 'Federal Shipping', '(503) 555-9931');
 
 -- --------------------------------------------------------
 
@@ -3418,9 +3502,10 @@ INSERT INTO `shippers` (`ShipperID`, `CompanyName`, `Phone`) VALUES
 -- Table structure for table `suppliers`
 --
 
-CREATE TABLE IF NOT EXISTS `suppliers` (
-  `SupplierID` int(11) NOT NULL auto_increment,
-  `CompanyName` varchar(40) default NULL,
+CREATE TABLE IF NOT EXISTS `suppliers`
+(
+    `SupplierID`  int(11) NOT NULL auto_increment,
+    `CompanyName` varchar(40) default NULL,
 #   `ContactName` varchar(30) default NULL,
 #   `ContactTitle` varchar(30) default NULL,
 #   `Address` varchar(60) default NULL,
@@ -3431,18 +3516,20 @@ CREATE TABLE IF NOT EXISTS `suppliers` (
 #   `Phone` varchar(24) default NULL,
 #   `Fax` varchar(24) default NULL,
 #   `HomePage` text,
-  PRIMARY KEY  (`SupplierID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=30 ;
+    PRIMARY KEY (`SupplierID`)
+) ENGINE = MyISAM
+  DEFAULT CHARSET = latin1
+  AUTO_INCREMENT = 30;
 
 --
 -- Dumping data for table `suppliers`
 --
 
 # INSERT INTO `suppliers` (`SupplierID`, `CompanyName`, `ContactName`, `ContactTitle`, `Address`, `City`, `Region`, `PostalCode`, `Country`, `Phone`, `Fax`, `HomePage`) VALUES
-INSERT INTO `suppliers` (`SupplierID`, `CompanyName`) VALUES
-(1, 'Own product'),
-(2, 'Company 1'),
-(3, 'Company 2');
+INSERT INTO `suppliers` (`SupplierID`, `CompanyName`)
+VALUES (1, 'Own product'),
+       (2, 'Company 1'),
+       (3, 'Company 2');
 # (1, 'Exotic Liquids', 'Charlotte Cooper', 'Purchasing Manager', '49 Gilbert St.', 'London', '', 'EC1 4SD', 'United Kingdom', '(171) 555-2222', '', ''),
 # (2, 'New Orleans Cajun Delights', 'Shelley Burke', 'Order Administrator', 'P.O. Box 78934', 'New Orleans', 'LA', '70117', 'United States', '(100) 555-4822', '', '#CAJUN.HTM#'),
 # (3, 'Grandma Kelly''s Homestead', 'Regina Murphy', 'Sales Representative', '707 Oxford Rd.', 'Ann Arbor', 'MI', '48104', 'United States', '(313) 555-5735', '(313) 555-3349', '');
