@@ -1,14 +1,14 @@
-import {Observable} from "rxjs";
-import {OrderService} from "./../order.service";
-import {OrderDetailsService} from "./../order_details.service";
-import {Order} from "./../order";
-import {Component, OnInit} from "@angular/core";
-import {Router} from '@angular/router';
-import {OrderDetails} from "./../order_details";
-import {CartService} from "./../cart.service";
-import {Invoice} from "../invoice";
-import {InvoiceService} from "../invoice.service";
-import {InvoiceAddress} from "../invoice_address";
+import { Observable } from "rxjs";
+import { OrderService } from "./../order.service";
+import { OrderDetailsService } from "./../order_details.service";
+import { Order } from "./../order";
+import { Customer } from "./../customer";
+import { Component, OnInit } from "@angular/core";
+import { Router } from '@angular/router';
+import { reduce } from 'rxjs/operators';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { OrderDetails } from "./../order_details";
+import { CartService } from "./../cart.service";
 
 @Component({
   selector: "app-order",
@@ -18,20 +18,15 @@ import {InvoiceAddress} from "../invoice_address";
 export class OrderComponent implements OnInit {
   orders: Observable<Order[]>;
   cartsArray = [];
-  invoices = [];
-  invoicesNames: Map<number, string>;
-  invoicesAddresses: Map<number, string>;
 
   constructor(private orderService: OrderService,
-              private router: Router, private orderDetailsService: OrderDetailsService, private cartService: CartService, private invoiceService: InvoiceService) {
-  }
+    private router: Router, private orderDetailsService: OrderDetailsService, private cartService: CartService) {}
 
   ngOnInit() {
     this.reloadData();
-    this.populateInvoices();
 
     this.cartService.getCartsList()
-      .subscribe(data => {
+    .subscribe(data => {
         this.cartsArray = data;
     })
   }
@@ -50,49 +45,41 @@ export class OrderComponent implements OnInit {
         error => console.log(error));
   }
 
+  // orderDetails(id: number){
+  //   this.router.navigate(['details', id]);
+  // }
+  //
+  // updateOrder(id: number){
+  //   this.router.navigate(['update', id]);
+  // }
+
   order: Order;
   orderDetails: OrderDetails;
 
-  showDetails(id: number) {
+  showDetails(id: number){
+  // this.order = new Order();
+  // this.orderService.getOrder(id)
+  //   .subscribe(data => {
+  //     console.log(data)
+  //     this.order = data;
+  //     for (let i = 0; i < this.cartsArray.length; i++) {
+  //       // orderDetails: OrderDetails;
+  //       this.orderDetails = new OrderDetails();
+  //       this.orderDetails.order = this.order;
+  //       this.orderDetails.product = this.cartsArray[i].product;
+  //       this.orderDetails.quantity = this.cartsArray[i].quantity;
+  //       this.orderDetails.subtotal = this.cartsArray[i].subtotal;
+  //       this.orderDetailsService.createOrderDetails(this.orderDetails)
+  //         .subscribe(data => console.log(data), error => console.log(error));
+  //       console.log(this.orderDetails);
+  //     };
+  //   }, error => console.log(error));
+
     this.router.navigate(['order_details', id]);
   }
 
-  downloadInvoice(order_id: number) {
-    var key = order_id;
-    console.log("key = " + key)
-    var href = this.invoicesAddresses.get(key);
-    console.log("href = " + href)
-    window.location.href = href;
-    this.router.navigate(['orders'])
-  }
-
-  populateInvoices() {
-    this.invoicesNames = new Map();
-    this.invoicesAddresses = new Map();
-    console.log("Hello form populateInvoices")
-    this.invoiceService.getAllInvoice()
-      .subscribe((invoice: Invoice[]) => {
-        console.log(invoice)
-        this.invoices = invoice
-        console.log(this.invoices)
-        this.invoices.forEach(i => console.log(i));
-        this.invoices.forEach((i: Invoice) => this.invoicesNames.set(i.order.id, i.invoiceName));
-        this.invoices.forEach((i: Invoice) => {
-          this.invoiceService.getInvoiceAddresByOrderId(i.order.id).subscribe((address: InvoiceAddress) => {
-            console.log("iter address = " + address.invoice_address);
-            console.log(address);
-            this.invoicesAddresses.set(i.order.id, address.invoice_address);
-          });
-        });
-        console.log("invoices names:");
-        this.invoicesNames.forEach((value, key, map) => console.log(value));
-        console.log("invoices addreses:");
-        this.invoicesAddresses.forEach((value, key, map) => console.log(value));
-      })
-  }
-
-  redirectTo(uri: string) {
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-      this.router.navigate([uri]));
+  redirectTo(uri:string){
+     this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+     this.router.navigate([uri]));
   }
 }

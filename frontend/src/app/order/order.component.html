@@ -9,7 +9,6 @@
           <th>Order</th>
           <th>Customer name</th>
           <th>Action</th>
-          <th>Invoice</th>
         </tr>
       </thead>
       <tbody>
@@ -17,10 +16,6 @@
           <td>{{order.id}}</td>
           <td>{{order.customer.companyName}}</td>
           <td><button (click)="showDetails(order.id)" class="btn btn-info" style="margin-left: 10px">Show</button></td>
-          <td>
-            <button (click)="downloadInvoice(order.id)" class="btn btn-info"
-                    style="margin-left: 10px">{{invoicesNames.get(order.id)}}</button>
-          </td>
         </tr>
       </tbody>
     </table>

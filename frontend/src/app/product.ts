@@ -1,4 +1,4 @@
-import {Supplier} from "./supplier";
+import { Supplier } from "./supplier";
 
 export class Product {
     id: number;
@@ -9,7 +9,6 @@ export class Product {
     unitPrice: number;
     ipath: string;
     availableColours: string;
-  quantity: number;
-  vat: number;
+    quantity: number;
     // active: boolean
 }
