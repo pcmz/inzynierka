@@ -3,21 +3,43 @@
 <hr/>
 <div [hidden]="submitted" style="width: 400px;">
   <form (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="name">Product name</label>
+    <div class="form-group form-inline">
+      <label for="productName">Product name</label>
       <input type="text" class="form-control" id="productName" required [(ngModel)]="product.productName" name="productName">
     </div>
 
-    <div class="form-group">
-      <label for="name">Quantity</label>
-      <input type="text" class="form-control" id="quantity" required [(ngModel)]="product.quantity" name="quantity">
+    <div class="form-group form-inline">
+      <label for="unit">Unit</label>
+      <input type="text" class="form-control" id="unit" required [(ngModel)]="product.unit" name="unit">
     </div>
 
-    <div class="form-group">
-      <label for="name">Unit Price</label>
+    <div class="form-group form-inline">
+      <label for="quantityPerUnit">Quantity per unit</label>
+      <input type="text" class="form-control" id="quantityPerUnit" required [(ngModel)]="product.quantityPerUnit" name="quantityPerUnit">
+    </div>
+
+    <div class="form-group form-inline">
+      <label for="unitPrice">Unit Price</label>
       <input type="text" class="form-control" id="unitPrice" required [(ngModel)]="product.unitPrice" name="unitPrice">
     </div>
 
+    <div class="form-group form-inline">
+      <label for="quantity">Quantity</label>
+      <input type="text" class="form-control" id="quantity" required [(ngModel)]="product.quantity" name="quantity">
+    </div>
+
+    <div class="form-group form-inline">
+      <label for="availableColours">Available colours</label>
+      <input type="text" class="form-control" id="availableColours" required [(ngModel)]="product.availableColours" name="availableColours">
+    </div>
+
+    <div class="form-group form-inline">
+      <label for="ipath">Image name</label>
+      <input type="text" class="form-control" id="ipath" required [(ngModel)]="product.ipath" name="ipath">
+      <small>Format: assets/details/image name</small>
+    </div>
+
+    <br>
     <button type="submit" class="btn btn-success">Submit</button>
   </form>
 </div>

@@ -1,0 +1,12 @@
+form  { display: table;      }
+div     { display: table-row;  }
+label { display: table-cell;
+        }
+input { display: table-cell;
+  margin-left: 30px;
+font-size: 10.5pt;
+}
+small {
+  margin-left: 10px;
+  display: inline-table;
+}

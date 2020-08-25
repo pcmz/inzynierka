@@ -22,6 +22,7 @@ export class OrderDetailsComponent implements OnInit {
 
   // orderDetails: Observable<OrderDetails[]>;
   orderDetailsArray = [];
+  orderDetailsArray2 = [];
 
   constructor(private orderService: OrderService,
     private router: Router, private route: ActivatedRoute, private orderDetailsService: OrderDetailsService) {}
@@ -42,6 +43,7 @@ export class OrderDetailsComponent implements OnInit {
       .subscribe(data => {
           this.orderDetailsArray = data;
       })
+
   }
 
   reloadData() {
@@ -50,5 +52,11 @@ export class OrderDetailsComponent implements OnInit {
 
   getItems() {
     return this.orderDetailsArray.filter((orderDetailsArray) => orderDetailsArray.order.id === this.order.id);
+  }
+
+  ngAfterContentChecked() {
+    this.orderDetailsArray2 = this.orderDetailsArray.filter(s => s.order.id == this.id);
+    this.total = this.orderDetailsArray2.reduce(
+        (prev, cur) => prev + cur.subtotal, 0);
   }
 }

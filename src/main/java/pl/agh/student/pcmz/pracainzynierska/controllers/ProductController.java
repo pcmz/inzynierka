@@ -44,8 +44,13 @@ public class ProductController {
                 .orElseThrow(() -> new ResourceNotFoundException("productId not found for this id :: " + productId));
 
         product.setProductName(productDetails.getProductName());
-        product.setQuantity(productDetails.getQuantity());
+        product.setUnit(productDetails.getUnit());
+        product.setQuantityPerUnit(productDetails.getQuantityPerUnit());
         product.setUnitPrice(productDetails.getUnitPrice());
+        product.setQuantity(productDetails.getQuantity());
+        product.setAvailableColours(productDetails.getAvailableColours());
+        product.setIpath(productDetails.getIpath());
+
         final Product updatedProduct = productRepository.save(product);
         return ResponseEntity.ok(updatedProduct);
     }

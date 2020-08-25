@@ -14,3 +14,32 @@ img {
   float: right;
   margin-left: 300px;
 }*/
+
+.alert  {
+  position: fixed;
+  /*top: 0;
+  left: 0.5rem;*/
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  /*border-radius: 0.25rem;*/
+  /*padding: 2rem;*/
+  background: #fff;
+  color: #000000;
+  box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.5);
+  transition:  all 0.2s ease-in-out;
+  opacity: 0;
+  height: 50px;
+  width: 200px;
+  margin-bottom: 0px;
+  vertical-align: text-top;
+  position: relative;
+}
+
+.visible {
+  opacity: 1;
+  transform: translateY(0.7rem);
+}
+
+.buttonStyle {
+  display: inline-block;
+  margin-left: 20px;
+}

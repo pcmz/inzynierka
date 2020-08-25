@@ -14,7 +14,7 @@
 
     <ng-container matColumnDef="productName">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Product name </mat-header-cell>
-      <mat-cell *matCellDef="let row"> <img src={{row.ipath}} class="mr-2" style="width: 40px"> {{row.productName}} </mat-cell>
+      <mat-cell *matCellDef="let row"> <img src={{row.ipath}} class="mr-2" style="width: 40px; height: 32px;"> {{row.productName}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="unit">

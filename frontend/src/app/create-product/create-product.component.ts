@@ -42,5 +42,9 @@ export class CreateProductComponent implements OnInit {
   }
 
 // -------------------------------------------------------------------
+  allInfo(product: Product){
+    return "assets/details/"+product.ipath;
+  }
 
+  prodIpath = "assets/details/";
 }

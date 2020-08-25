@@ -1,17 +1,20 @@
 <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
   <!-- Links -->
-  <ul class="navbar-nav">
+  <ul class="navbar-nav mr-auto">
+    <!-- icons from page: https://icons8.com/  -->
     <li class="nav-item">
-        <a routerLink="products" class="nav-link" routerLinkActive="active">Product List</a>
+        <a routerLink="products" class="nav-link" routerLinkActive="active"><img class="imgg" src='assets/icons/list.png'>Product List</a>
     </li>
     <li class="nav-item">
-        <a routerLink="add" class="nav-link" routerLinkActive="active">Add Product</a>
+        <a routerLink="add" class="nav-link" routerLinkActive="active"><img class="imgg" src='assets/icons/add.png'>Add Product</a>
+    </li>
+  </ul>
+  <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+        <a routerLink="carts" class="nav-link" routerLinkActive="active"><img class="imgg" src='assets/icons/cart.png'>Cart</a>
     </li>
     <li class="nav-item">
-        <a routerLink="carts" class="nav-link" routerLinkActive="active">Cart</a>
-    </li>
-    <li class="nav-item">
-        <a routerLink="orders" class="nav-link" routerLinkActive="active">Order</a>
+        <a routerLink="orders" class="nav-link" routerLinkActive="active"><img class="imgg" src='assets/icons/order.png'>Order</a>
     </li>
   </ul>
 </nav>

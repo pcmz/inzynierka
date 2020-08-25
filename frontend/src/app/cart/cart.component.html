@@ -1,12 +1,12 @@
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <h2>Cart</h2>
+    <h3>Cart</h3>
   </div>
   <div class="panel-body">
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>Id</th>
+          <!-- <th>Id</th> -->
           <th>Product name</th>
           <th>Unit price [zl gross]</th>
           <th>Quantity [m2 (lm)]</th>
@@ -16,7 +16,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let cart of carts | async">
-          <td>{{cart.id}}</td>
+          <!-- <td>{{cart.id}}</td> -->
           <td><img src={{cart.product.ipath}} class="mr-2" style="width: 40px"> {{cart.product.productName}}</td>
           <td>{{cart.product.unitPrice}}</td>
           <td>{{cart.quantity}}</td>

@@ -3,9 +3,12 @@ package pl.agh.student.pcmz.pracainzynierska.models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -23,6 +26,12 @@ public class Order implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "CustomerID")
     private Customer customer;
+
+    @CreationTimestamp
+    private LocalDateTime createDate;
+
+    @UpdateTimestamp
+    private LocalDateTime updateDate;
 
 //    @Temporal(TemporalType.DATE)
 //    @Column(name = "OrderDate")

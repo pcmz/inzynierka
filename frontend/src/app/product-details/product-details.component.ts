@@ -60,14 +60,32 @@ export class ProductDetailsComponent implements OnInit {
     this.router.navigate(['/products']);
   }
 
+  des: string;
+  isVisible: boolean = false;
   validateCount() {
     console.log('Validate');
     const max = this.product.quantity;
+
+    if(this.count > max || this.count < 1){
+        this.showAlert();
+    }
     if (this.count > max) {
       this.count = max;
+      this.des = 'max stock is: ' + this.count;
     } else if (this.count < 1) {
       this.count = 1;
+      this.des = 'min stock is: ' + this.count;
     }
+
+
+  }
+
+  showAlert() : void {
+    if (this.isVisible) { // if the alert is visible return
+      return;
+    }
+    this.isVisible = true;
+    setTimeout(()=> this.isVisible = false, 2000); // hide the alert after 2.5s
   }
 
   save() {

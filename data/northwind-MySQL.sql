@@ -50,6 +50,9 @@ INSERT INTO `categories` (`CategoryID`, `CategoryName`, `Description`, `Picture`
 CREATE TABLE IF NOT EXISTS `customers` (
   `CustomerID` int(11) NOT NULL auto_increment,
   `CompanyName` varchar(40) default NULL,
+  `CustomerEmail` varchar(40) default NULL,
+  `CustomerPhone` varchar(40) default NULL,
+  `ShippingAddress` varchar(40) default NULL,
 #   `ContactName` varchar(30) default NULL,
 #   `ContactTitle` varchar(30) default NULL,
 #   `Address` varchar(60) default NULL,
@@ -67,10 +70,10 @@ CREATE TABLE IF NOT EXISTS `customers` (
 --
 
 # INSERT INTO `customers` (`CustomerID`, `CompanyName`, `ContactName`, `ContactTitle`, `Address`, `City`, `Region`, `PostalCode`, `Country`, `Phone`, `Fax`) VALUES
-INSERT INTO `customers` (`CustomerID`, `CompanyName`) VALUES
-(1, 'Jan Kowalski sp. z.o.o'),
-(2, 'Jan Nowak sp. z.o.o'),
-(3, 'Bud-bud sp. z.o.o');
+INSERT INTO `customers` (`CustomerID`, `CompanyName`, `CustomerEmail`, `CustomerPhone`, `ShippingAddress`) VALUES
+(1, 'Jan Kowalski sp. z.o.o', 'jan.kowalski@jk', '123456789', 'Cracow ul. Domowa 1/1 32-389'),
+(2, 'Jan Nowak sp. z.o.o', 'jan.nowak@jn', '987654321', 'Przemysl ul. Drzewowa 10/12 45-321'),
+(3, 'Bud-bud sp. z.o.o', 'bud.bud@bb', '123498765', 'Gdansk ul. Latarniowa 76/45 92-109');
 # ('AROUT', 'Around the Horn', 'Thomas Hardy', 'Sales Representative', '120 Hanover Sq.', 'London', '', 'WA1 1DP', 'United Kingdom', '(171) 555-7788', '(171) 555-6750'),
 # ('BERGS', 'Berglunds snabbk?p', 'Christina Berglund', 'Order Administrator', 'Berguvsv?gen  8', 'Lule?', '', 'S-958 22', 'Sweden', '0921-12 34 65', '0921-12 34 67'),
 # ('BLAUS', 'Blauer See Delikatessen', 'Hanna Moos', 'Sales Representative', 'Forsterstr. 57', 'Mannheim', '', '68306', 'Germany', '0621-08460', '0621-08924'),
@@ -211,6 +214,8 @@ INSERT INTO `employees` (`EmployeeID`, `LastName`, `FirstName`, `Title`, `TitleO
 CREATE TABLE IF NOT EXISTS `orders` (
   `OrderID` int(11) NOT NULL auto_increment,
   `CustomerID` varchar(5) default NULL,
+  `CreateDate` DATETIME default null,
+  `UpdateDate` DATETIME default null,
 #   `EmployeeID` int(11) default NULL,
 #   `OrderDate` date default NULL,
 #   `RequiredDate` date default NULL,

@@ -22,6 +22,15 @@ public class Customer implements Serializable {
     @Column(name = "CompanyName", length = 40)
     private String companyName;
 
+    @Column(name = "CustomerEmail", length = 40)
+    private String customerEmail;
+
+    @Column(name = "CustomerPhone", length = 40)
+    private String customerPhone;
+
+    @Column(name = "ShippingAddress", length = 40)
+    private String shippingAddress;
+
 //    @Column(name = "ContactName", length = 30)
 //    private String contactName;
 //

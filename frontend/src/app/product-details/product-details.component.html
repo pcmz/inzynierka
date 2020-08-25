@@ -46,8 +46,9 @@
           name="count"
           required
           min="1"
-          [max]=product?.quantity>
+          [max]=product?.quantity><button type="submit" class="btn btn-primary buttonStyle"> Add to Cart </button>
+          <div class="alert" [class.visible]="isVisible">
+              <p class="text-center">{{des}}</p>
+          </div>
   </label>
-  <br>
-  <button type="submit" class="btn btn-primary"> Add to Cart </button>
 </form>
