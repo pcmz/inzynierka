@@ -13,18 +13,25 @@
           <th>Shipping address</th>
           <th>Order data</th>
           <th>Action</th>
+          <th>Invoice</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let order of orders | async">
-          <td>{{order.id}}</td>
-          <td>{{order.customer.companyName}}</td>
-          <td>{{order.customer.customerEmail}}</td>
-          <td>{{order.customer.customerPhone}}</td>
-          <td>{{order.customer.shippingAddress}}</td>
-          <td>{{order.createDate | date}}</td>
-          <td><button (click)="showDetails(order.id)" class="btn btn-info" style="margin-left: 10px">Show</button></td>
-        </tr>
+      <tr *ngFor="let order of orders | async">
+        <td>{{order.id}}</td>
+        <td>{{order.customer.companyName}}</td>
+        <td>{{order.customer.customerEmail}}</td>
+        <td>{{order.customer.customerPhone}}</td>
+        <td>{{order.customer.shippingAddress}}</td>
+        <td>{{order.createDate | date}}</td>
+        <td>
+          <button (click)="showDetails(order.id)" class="btn btn-info" style="margin-left: 10px">Show</button>
+        </td>
+        <td>
+          <button (click)="downloadInvoice(order.id)" class="btn btn-info"
+                  style="margin-left: 10px">{{invoicesNames.get(order.id)}}</button>
+        </td>
+      </tr>
       </tbody>
     </table>
   </div>

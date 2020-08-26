@@ -47,33 +47,36 @@ INSERT INTO `categories` (`CategoryID`, `CategoryName`, `Description`, `Picture`
 -- Table structure for table `customers`
 --
 
-CREATE TABLE IF NOT EXISTS `customers` (
-  `CustomerID` int(11) NOT NULL auto_increment,
-  `CompanyName` varchar(40) default NULL,
-  `CustomerEmail` varchar(40) default NULL,
-  `CustomerPhone` varchar(40) default NULL,
-  `ShippingAddress` varchar(40) default NULL,
+CREATE TABLE IF NOT EXISTS `customers`(
+                                          `CustomerID`      int(11) NOT NULL auto_increment,
+                                          `CompanyName`     varchar(40) default NULL,
+                                          `CustomerEmail`   varchar(40) default NULL,
+                                          `CustomerPhone`   varchar(40) default NULL,
+                                          `ShippingAddress` varchar(40) default NULL,
 #   `ContactName` varchar(30) default NULL,
 #   `ContactTitle` varchar(30) default NULL,
-#   `Address` varchar(60) default NULL,
+#   `Address`     varchar(60) default NULL,
 #   `City` varchar(15) default NULL,
 #   `Region` varchar(15) default NULL,
 #   `PostalCode` varchar(10) default NULL,
 #   `Country` varchar(15) default NULL,
 #   `Phone` varchar(24) default NULL,
 #   `Fax` varchar(24) default NULL,
-  PRIMARY KEY  (`CustomerID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+                                          `NIP`             varchar(10) default NULL,
+                                          PRIMARY KEY (`CustomerID`)
+) ENGINE = MyISAM
+  DEFAULT CHARSET = latin1
+  AUTO_INCREMENT = 1;
 
 --
 -- Dumping data for table `customers`
 --
 
 # INSERT INTO `customers` (`CustomerID`, `CompanyName`, `ContactName`, `ContactTitle`, `Address`, `City`, `Region`, `PostalCode`, `Country`, `Phone`, `Fax`) VALUES
-INSERT INTO `customers` (`CustomerID`, `CompanyName`, `CustomerEmail`, `CustomerPhone`, `ShippingAddress`) VALUES
-(1, 'Jan Kowalski sp. z.o.o', 'jan.kowalski@jk', '123456789', 'Cracow ul. Domowa 1/1 32-389'),
-(2, 'Jan Nowak sp. z.o.o', 'jan.nowak@jn', '987654321', 'Przemysl ul. Drzewowa 10/12 45-321'),
-(3, 'Bud-bud sp. z.o.o', 'bud.bud@bb', '123498765', 'Gdansk ul. Latarniowa 76/45 92-109');
+INSERT INTO `customers` (`CustomerID`, `CompanyName`, `CustomerEmail`, `CustomerPhone`, `ShippingAddress`, `NIP`)
+VALUES (1, 'Jan Kowalski sp. z.o.o', 'jan.kowalski@jk', '123456789', 'ul. Domowa 1/1, Cracow 32-389', '6762281710'),
+       (2, 'Jan Nowak sp. z.o.o', 'jan.nowak@jn', '987654321', 'ul. Drzewowa 10/12, Przemysl 45-321', '6750002236'),
+       (3, 'Bud-bud sp. z.o.o', 'bud.bud@bb', '123498765', 'ul. Latarniowa 76/45, Gdansk 92-109', '6750006257');
 # ('AROUT', 'Around the Horn', 'Thomas Hardy', 'Sales Representative', '120 Hanover Sq.', 'London', '', 'WA1 1DP', 'United Kingdom', '(171) 555-7788', '(171) 555-6750'),
 # ('BERGS', 'Berglunds snabbk?p', 'Christina Berglund', 'Order Administrator', 'Berguvsv?gen  8', 'Lule?', '', 'S-958 22', 'Sweden', '0921-12 34 65', '0921-12 34 67'),
 # ('BLAUS', 'Blauer See Delikatessen', 'Hanna Moos', 'Sales Representative', 'Forsterstr. 57', 'Mannheim', '', '68306', 'Germany', '0621-08460', '0621-08924'),
@@ -1073,19 +1076,51 @@ CREATE TABLE IF NOT EXISTS `orders` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `invoices`
+--
+
+CREATE TABLE IF NOT EXISTS `invoices`
+(
+    `ID`          int(11) NOT NULL auto_increment,
+    `OrderID`     int(11)     default NULL,
+    `FakturaXlID` varchar(40) default NULL,
+    `InvoiceName` varchar(40) default NULL,
+#   `EmployeeID` int(11) default NULL,
+#   `OrderDate` date default NULL,
+#   `RequiredDate` date default NULL,
+#   `ShippedDate` date default NULL,
+#   `ShipVia` int(11) default NULL,
+#   `Freight` float(1,0) default '0',
+#   `ShipName` varchar(40) default NULL,
+#   `ShipAddress` varchar(60) default NULL,
+#   `ShipCity` varchar(15) default NULL,
+#   `ShipRegion` varchar(15) default NULL,
+#   `ShipPostalCode` varchar(10) default NULL,
+#   `ShipCountry` varchar(15) default NULL,
+    PRIMARY KEY (`ID`)
+) ENGINE = MyISAM
+  DEFAULT CHARSET = latin1
+  AUTO_INCREMENT = 1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `carts`
 --
 
-CREATE TABLE IF NOT EXISTS `carts` (
-`odID` int(11) NOT NULL auto_increment,
+CREATE TABLE IF NOT EXISTS `carts`
+(
+    `odID`      int(11) NOT NULL auto_increment,
 #   `OrderID` int(11) default '0',
-`ProductID` int(11) default NULL,
+    `ProductID` int(11)     default NULL,
 #   `UnitPrice` float(1,0) default '0',
-`Quantity` smallint(6) default NULL,
+    `Quantity`  smallint(6) default NULL,
 #   `Discount` float(1,0) default '0',
-`Subtotal` float(11) default '0',
-PRIMARY KEY  (`odID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+    `Subtotal`  float(11)   default '0',
+    PRIMARY KEY (`odID`)
+) ENGINE = MyISAM
+  DEFAULT CHARSET = latin1
+  AUTO_INCREMENT = 1 ;
 
 --
 -- Dumping data for table `carts`
@@ -3282,44 +3317,49 @@ CREATE TABLE IF NOT EXISTS `order_details` (
 -- Table structure for table `products`
 --
 
-CREATE TABLE IF NOT EXISTS `products` (
-  `ProductID` int(11) NOT NULL auto_increment,
-  `ProductName` varchar(40) default NULL,
-  `Unit` varchar(40) default NULL,
-  `SupplierID` int(11) default NULL,
+CREATE TABLE IF NOT EXISTS `products`
+(
+    `ProductID`        int(11) NOT NULL auto_increment,
+    `ProductName`      varchar(40)  default NULL,
+    `Unit`             varchar(40)  default NULL,
+    `SupplierID`       int(11)      default NULL,
 #   `CategoryID` int(11) default NULL,
-  `QuantityPerUnit` varchar(20) default NULL,
-  `UnitPrice` float(11) default '0',
-  `Ipath` varchar(250) default NULL,
-  `AvailableColours` varchar(40) default NULL,
-  `Quantity` int(11) default NULL,
+    `QuantityPerUnit`  varchar(20)  default NULL,
+    `UnitPrice`        float(11)    default '0',
+    `Ipath`            varchar(250) default NULL,
+    `AvailableColours` varchar(40)  default NULL,
+    `Quantity`         int(11)      default NULL,
+    `VAT`              int(3)       default '23',
 #   `UnitsInStock` smallint(6) default '0',
 #   `UnitsOnOrder` smallint(6) default '0',
 #   `ReorderLevel` smallint(6) default '0',
 #   `Discontinued` tinyint(1) default '0',
-  PRIMARY KEY  (`ProductID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+    PRIMARY KEY (`ProductID`)
+) ENGINE = MyISAM
+  DEFAULT CHARSET = latin1
+  AUTO_INCREMENT = 1;
 
 --
 -- Dumping data for table `products`
 --
 
 # INSERT INTO `products` (`ProductID`, `ProductName`, `SupplierID`, `CategoryID`, `QuantityPerUnit`, `UnitPrice`, `UnitsInStock`, `UnitsOnOrder`, `ReorderLevel`, `Discontinued`) VALUES
-INSERT INTO `products` (`ProductID`, `ProductName`, `Unit`, `SupplierID`, `QuantityPerUnit`, `UnitPrice`, Ipath, AvailableColours, Quantity) VALUES
-(1, 'Cobble 10x20x4cm', 'm2', 1,'52 pieces', 20.92, 'assets/details/cobble.JPG', 'grey, red, yellow', 1000),
-(2, 'Cobble 10x20x6cm', 'm2', 1,'52 pieces', 21.56, 'assets/details/cobble.JPG', 'grey, red, yellow', 900),
-(3, 'Cobble 10x20x8cm', 'm2', 1,'52 pieces', 22.12, 'assets/details/cobble.JPG', 'grey, red, yellow', 1200),
-(4, 'Edge 6x20x100cm', 'lm', 2,  '1 piece', 10.12, 'assets/details/edge.JPG', 'grey', 850),
-(5, 'Edge 6x25x100cm', 'lm', 2,  '1 piece', 11.25, 'assets/details/edge.JPG', 'grey', 450),
-(6, 'Edge 8x25x100cm', 'lm', 2,  '1 piece', 12.31, 'assets/details/edge.JPG', 'grey', 1500),
-(7, 'Edge 8x30x100cm', 'lm', 2,  '1 piece', 13.89, 'assets/details/edge.JPG', 'grey', 120),
-(8, 'Edge 6x20x50cm', 'lm', 2,  '2 pieces', 11.42, 'assets/details/edge.JPG', 'grey', 45),
-(9, 'Edge 6x25x50cm', 'lm', 2,  '2 pieces', 12.55, 'assets/details/edge.JPG', 'grey', 120),
-(10, 'Edge 8x25x50cm', 'lm', 2,  '2 pieces', 13.61, 'assets/details/edge.JPG', 'grey', 180),
-(11, 'Edge 8x30x50cm', 'lm', 2,  '2 pieces', 15.19, 'assets/details/edge.JPG', 'grey', 200),
-(12, 'Kerb 15x30x100cm ', 'lm', 3,  '1 piece', 26.46, 'assets/details/kerb.JPG', 'grey', 890),
-(13, 'Kerb 20x30x100cm ', 'lm', 3,  '1 piece', 27.72, 'assets/details/kerb.JPG', 'grey', 150),
-(14, 'Kerb 25x30x100cm ', 'lm', 3,  '1 piece', 28.36, 'assets/details/kerb.JPG', 'grey', 490);
+INSERT INTO `products` (`ProductID`, `ProductName`, `Unit`, `SupplierID`, `QuantityPerUnit`, `UnitPrice`, Ipath,
+                        AvailableColours, Quantity, VAT)
+VALUES (1, 'Cobble 10x20x4cm', 'm2', 1, '52 pieces', 20.92, 'assets/details/cobble.JPG', 'grey, red, yellow', 1000, 23),
+       (2, 'Cobble 10x20x6cm', 'm2', 1, '52 pieces', 21.56, 'assets/details/cobble.JPG', 'grey, red, yellow', 900, 23),
+       (3, 'Cobble 10x20x8cm', 'm2', 1, '52 pieces', 22.12, 'assets/details/cobble.JPG', 'grey, red, yellow', 1200, 23),
+       (4, 'Edge 6x20x100cm', 'lm', 2, '1 piece', 10.12, 'assets/details/edge.JPG', 'grey', 850, 23),
+       (5, 'Edge 6x25x100cm', 'lm', 2, '1 piece', 11.25, 'assets/details/edge.JPG', 'grey', 450, 23),
+       (6, 'Edge 8x25x100cm', 'lm', 2, '1 piece', 12.31, 'assets/details/edge.JPG', 'grey', 1500, 23),
+       (7, 'Edge 8x30x100cm', 'lm', 2, '1 piece', 13.89, 'assets/details/edge.JPG', 'grey', 120, 23),
+       (8, 'Edge 6x20x50cm', 'lm', 2, '2 pieces', 11.42, 'assets/details/edge.JPG', 'grey', 45, 23),
+       (9, 'Edge 6x25x50cm', 'lm', 2, '2 pieces', 12.55, 'assets/details/edge.JPG', 'grey', 120, 23),
+       (10, 'Edge 8x25x50cm', 'lm', 2, '2 pieces', 13.61, 'assets/details/edge.JPG', 'grey', 180, 23),
+       (11, 'Edge 8x30x50cm', 'lm', 2, '2 pieces', 15.19, 'assets/details/edge.JPG', 'grey', 200, 23),
+       (12, 'Kerb 15x30x100cm ', 'lm', 3, '1 piece', 26.46, 'assets/details/kerb.JPG', 'grey', 890, 23),
+       (13, 'Kerb 20x30x100cm ', 'lm', 3, '1 piece', 27.72, 'assets/details/kerb.JPG', 'grey', 150, 23),
+       (14, 'Kerb 25x30x100cm ', 'lm', 3, '1 piece', 28.36, 'assets/details/kerb.JPG', 'grey', 490, 23);
 # (4, 'Cobble', 'm2', 1,'52 pieces', 20.92),
 # (5, 'Edge', 'lm', 1,  '1 piece', 10.12),
 # (6, 'Kerb', 'lm', 1,  '1 piece', 16.52),

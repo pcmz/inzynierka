@@ -31,14 +31,14 @@ public class Customer implements Serializable {
     @Column(name = "ShippingAddress", length = 40)
     private String shippingAddress;
 
+    @Column(name = "NIP", length = 10)
+    private String nip;
+
 //    @Column(name = "ContactName", length = 30)
 //    private String contactName;
 //
 //    @Column(name = "ContactTitle", length = 30)
 //    private String contactTitle;
-//
-//    @Column(name = "Address", length = 60)
-//    private String address;
 //
 //    @Column(name = "City", length = 15)
 //    private String city;
