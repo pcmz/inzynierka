@@ -9,6 +9,8 @@ import {OrderDetails} from "./../order_details";
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {CustomerComponent} from "../customer/customer.component";
 
 @Component({
   selector: "app-cart",
@@ -31,7 +33,7 @@ export class CartComponent implements OnInit {
   orderDetails: OrderDetails = new OrderDetails();
 
   constructor(private cartService: CartService, private customerService: CustomerService, private fb: FormBuilder, private orderService: OrderService, private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router, private modalService: NgbModal) {
   }
 
   ngOnInit() {
@@ -96,4 +98,12 @@ export class CartComponent implements OnInit {
     this.completeTheOrder();
     this.redirectTo('/products');
   }
+
+  myfunction(){
+    // console.log("Hello");
+    // this.router.navigate(['/products']);
+    const modalRef = this.modalService.open(CustomerComponent);
+    modalRef.componentInstance.name = 'World';
+  }
+
 }

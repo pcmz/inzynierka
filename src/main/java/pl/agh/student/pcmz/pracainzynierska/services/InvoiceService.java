@@ -91,13 +91,13 @@ public class InvoiceService {
         dokument.setWartoscBrutto(String.format("%.2f", wartoscBrutto).replace(',', '.'));
 
         Customer customer = order.getCustomer();
-        String shippingAddress = customer.getShippingAddress();
+//        String shippingAddress = customer.getShippingAddress();
         Podmiot nabywca = new Podmiot();
-        nabywca.setNazwa(customer.getCompanyName());
+//        nabywca.setNazwa(customer.getCompanyName());
         nabywca.setNip(customer.getNip());
-        nabywca.setUlicaINumer(shippingAddress.substring(0, shippingAddress.lastIndexOf(',')));
-        nabywca.setKodPocztowy(shippingAddress.substring(shippingAddress.length() - 6));
-        nabywca.setMiejscowosc(shippingAddress.substring(shippingAddress.lastIndexOf(',') + 2, shippingAddress.lastIndexOf(' ')));
+//        nabywca.setUlicaINumer(shippingAddress.substring(0, shippingAddress.lastIndexOf(',')));
+//        nabywca.setKodPocztowy(shippingAddress.substring(shippingAddress.length() - 6));
+//        nabywca.setMiejscowosc(shippingAddress.substring(shippingAddress.lastIndexOf(',') + 2, shippingAddress.lastIndexOf(' ')));
         nabywca.setKraj(KRAJ);
         dokument.setNabywca(nabywca);
         return dokument;

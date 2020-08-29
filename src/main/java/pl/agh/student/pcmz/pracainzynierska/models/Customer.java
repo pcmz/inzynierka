@@ -19,8 +19,15 @@ public class Customer implements Serializable {
     @Column(name = "CustomerID", unique = true, nullable = false, length = 11)
     private Long id;
 
-    @Column(name = "CompanyName", length = 40)
-    private String companyName;
+    @Column(name = "CompanyName", length = 100)
+    private String name;
+
+    @Column(name = "NIP", length = 10)
+    private String nip;
+
+    @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER )
+    @JoinColumn(name = "Address")
+    private Address address;
 
     @Column(name = "CustomerEmail", length = 40)
     private String customerEmail;
@@ -28,11 +35,10 @@ public class Customer implements Serializable {
     @Column(name = "CustomerPhone", length = 40)
     private String customerPhone;
 
-    @Column(name = "ShippingAddress", length = 40)
-    private String shippingAddress;
+//    @Column(name = "ShippingAddress", length = 40)
+//    private String shippingAddress;
 
-    @Column(name = "NIP", length = 10)
-    private String nip;
+
 
 //    @Column(name = "ContactName", length = 30)
 //    private String contactName;

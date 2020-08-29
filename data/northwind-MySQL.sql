@@ -49,10 +49,11 @@ INSERT INTO `categories` (`CategoryID`, `CategoryName`, `Description`, `Picture`
 
 CREATE TABLE IF NOT EXISTS `customers`(
                                           `CustomerID`      int(11) NOT NULL auto_increment,
-                                          `CompanyName`     varchar(40) default NULL,
+                                          `CompanyName`     varchar(100) character set utf8 default NULL,
                                           `CustomerEmail`   varchar(40) default NULL,
                                           `CustomerPhone`   varchar(40) default NULL,
-                                          `ShippingAddress` varchar(40) default NULL,
+#                                           `ShippingAddress` varchar(40) default NULL,
+                                          `Address`       int(11)      default NULL,
 #   `ContactName` varchar(30) default NULL,
 #   `ContactTitle` varchar(30) default NULL,
 #   `Address`     varchar(60) default NULL,
@@ -73,10 +74,10 @@ CREATE TABLE IF NOT EXISTS `customers`(
 --
 
 # INSERT INTO `customers` (`CustomerID`, `CompanyName`, `ContactName`, `ContactTitle`, `Address`, `City`, `Region`, `PostalCode`, `Country`, `Phone`, `Fax`) VALUES
-INSERT INTO `customers` (`CustomerID`, `CompanyName`, `CustomerEmail`, `CustomerPhone`, `ShippingAddress`, `NIP`)
-VALUES (1, 'Jan Kowalski sp. z.o.o', 'jan.kowalski@jk', '123456789', 'ul. Domowa 1/1, Cracow 32-389', '6762281710'),
-       (2, 'Jan Nowak sp. z.o.o', 'jan.nowak@jn', '987654321', 'ul. Drzewowa 10/12, Przemysl 45-321', '6750002236'),
-       (3, 'Bud-bud sp. z.o.o', 'bud.bud@bb', '123498765', 'ul. Latarniowa 76/45, Gdansk 92-109', '6750006257');
+INSERT INTO `customers` (`CustomerID`, `CompanyName`, `CustomerEmail`, `CustomerPhone`, `Address`, `NIP`)
+VALUES (1, 'Jan Kowalski sp. z.o.o', 'jan.kowalski@jk', '123456789', 1, '6762281710'),
+       (2, 'Jan Nowak sp. z.o.o', 'jan.nowak@jn', '987654321', 2, '6750002236'),
+       (3, 'Bud-bud sp. z.o.o', 'bud.bud@bb', '123498765', 3, '6750006257');
 # ('AROUT', 'Around the Horn', 'Thomas Hardy', 'Sales Representative', '120 Hanover Sq.', 'London', '', 'WA1 1DP', 'United Kingdom', '(171) 555-7788', '(171) 555-6750'),
 # ('BERGS', 'Berglunds snabbk?p', 'Christina Berglund', 'Order Administrator', 'Berguvsv?gen  8', 'Lule?', '', 'S-958 22', 'Sweden', '0921-12 34 65', '0921-12 34 67'),
 # ('BLAUS', 'Blauer See Delikatessen', 'Hanna Moos', 'Sales Representative', 'Forsterstr. 57', 'Mannheim', '', '68306', 'Germany', '0621-08460', '0621-08924'),
@@ -3517,3 +3518,23 @@ INSERT INTO `suppliers` (`SupplierID`, `CompanyName`) VALUES
 # (27, 'Escargots Nouveaux', 'Marie Delamare', 'Sales Manager', '22, rue H. Voiron', 'Montceau', '', '71300', 'France', '85.57.00.07', '', ''),
 # (28, 'Gai p?turage', 'Eliane Noz', 'Sales Representative', 'Bat. B\r\n3, rue des Alpes', 'Annecy', '', '74000', 'France', '38.76.98.06', '38.76.98.58', ''),
 # (29, 'For?ts d''?rables', 'Chantal Goulet', 'Accounting Manager', '148 rue Chasseur', 'Ste-Hyacinthe', 'Qu?bec', 'J2S 7S8', 'Canada', '(514) 555-2955', '(514) 555-2921', '');
+
+
+CREATE TABLE IF NOT EXISTS `addresses`(
+    `AddressID`        int(11) NOT NULL auto_increment,
+    `City`      varchar(40) character set utf8 default NULL,
+    `Code`      varchar(40) character set utf8 default NULL,
+    `Country`      varchar(40) character set utf8 default NULL,
+    `House_number`      varchar(40) character set utf8 default NULL,
+    `Post_office`      varchar(40) character set utf8 default NULL,
+    `Street`      varchar(40) character set utf8 default NULL,
+    PRIMARY KEY (`AddressID`)
+) ENGINE = MyISAM
+  DEFAULT CHARSET = latin1
+  AUTO_INCREMENT = 1;
+
+INSERT INTO `addresses` (`AddressID`, `City`, `Code`, `Country`, `House_number`, `Post_office`, `Street`)
+VALUES (1, 'Cracow', '32-389', 'Poland', '1', 'Cracow', 'Domowa'),
+       (2, 'Wroclaw', '90-123', 'Poland', '78', 'Wroclaw', 'Parkowa'),
+       (3, 'Gdansk', '78-001', 'Poland', '63', 'Gdansk', 'Ogrodowa');
+

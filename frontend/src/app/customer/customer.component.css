@@ -1,0 +1,10 @@
+input,textarea {
+  width: 100%;
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.first_input {
+  width: 50%;
+}

@@ -12,6 +12,9 @@ export class CustomerService {
 
   private baseUrl = 'http://localhost:8081/api/v1/customers';
 
+  //api
+  private baseUrl2 = 'http://localhost:8081/api/v1/customerFromAPI';
+
   constructor(private http: HttpClient) {
   }
 
@@ -37,6 +40,10 @@ export class CustomerService {
 
   getCustomerList(): Observable<any> {
     return this.http.get(`${this.baseUrl}`);
+  }
+
+  getCustomerFromAPI(id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl2}/${id}`);
   }
 
 }

@@ -19,10 +19,10 @@
       <tbody>
       <tr *ngFor="let order of orders | async">
         <td>{{order.id}}</td>
-        <td>{{order.customer.companyName}}</td>
+        <td>{{order.customer.name}}</td>
         <td>{{order.customer.customerEmail}}</td>
         <td>{{order.customer.customerPhone}}</td>
-        <td>{{order.customer.shippingAddress}}</td>
+        <td>{{order.customer.address.city}}, {{order.customer.address.code}}, ul. {{order.customer.address.street}} {{order.customer.address.house_no}}</td>
         <td>{{order.createDate | date}}</td>
         <td>
           <button (click)="showDetails(order.id)" class="btn btn-info" style="margin-left: 10px">Show</button>

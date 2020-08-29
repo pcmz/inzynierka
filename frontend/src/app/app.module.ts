@@ -17,6 +17,7 @@ import { UpdateProductComponent } from './update-product/update-product.componen
 import { CartComponent } from './cart/cart.component';
 import { OrderComponent } from './order/order.component';
 import { OrderDetailsComponent } from './order_details/order_details.component';
+import { CustomerComponent } from './customer/customer.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
@@ -51,7 +52,8 @@ export function kcFactory(keycloakService: KeycloakService) {
     CdkDetailRowDirective,
     CartComponent,
     OrderComponent,
-    OrderDetailsComponent
+    OrderDetailsComponent,
+    CustomerComponent
 
   ],
   imports: [

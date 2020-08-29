@@ -11,3 +11,8 @@
   border-radius: 8px;
   margin: 4px 4px 4px 0px;
 }
+
+.pointer {
+    cursor: pointer;
+    margin: 5px;
+}

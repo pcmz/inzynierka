@@ -1,0 +1,31 @@
+<form (ngSubmit)="onSubmit()" >
+<div class="modal-header">
+  <h4 class="modal-title">Add new customer</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body" *ngIf="customer">
+  <!-- <p>Hello, {{api.nip}}!</p> -->
+  <input type="text" placeholder="KRS number" [(ngModel)]=krs_number name="krs_number" class="first_input">
+  <button type="submit" class="btn btn-success">Fillful the form</button>
+  <br>
+  <br>
+  <input type="text" placeholder="NIP number" [(ngModel)]="customer.nip" name="nip">
+  <input type="text" placeholder="Customer name" [(ngModel)]="customer.name" name="name">
+  <input type="text" placeholder="City" [(ngModel)]="customer.address.city" name="city">
+  <input type="text" placeholder="Code" [(ngModel)]="customer.address.code" name="code">
+  <input type="text" placeholder="Country" [(ngModel)]="customer.address.country" name="country">
+  <input type="text" placeholder="House number" [(ngModel)]="customer.address.house_no" name="house_no">
+  <input type="text" placeholder="Post office" [(ngModel)]="customer.address.post_office" name="post_office">
+  <input type="text" placeholder="Street" [(ngModel)]="customer.address.street" name="street">
+  <input type="text" placeholder="Customer email" [(ngModel)]="customer.customerEmail" name="customerEmail">
+  <input type="text" placeholder="Customer phone" [(ngModel)]="customer.customerPhone" name="customerPhone">
+  <br>
+  <br>
+  <button type="button" class="btn btn-success" (click)="myFunc(); activeModal.close('Close click')">Add customer</button>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+</div>
+</form>

@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Product } from "./product";
+
+import { Address } from "./address";
 import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductService {
+export class AddressService {
 
-  private baseUrl = 'http://localhost:8081/api/v1/products';
+  private baseUrl = 'http://localhost:8081/api/v1/addresses';
 
   constructor(private http: HttpClient) {
   }
@@ -18,23 +19,23 @@ export class ProductService {
    console.log(brokers);
   }
 
-  getProduct(id: number): Observable<any> {
+  getAddress(id: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/${id}`);
   }
 
-  createProduct(product: Object): Observable<Object> {
-    return this.http.post(`${this.baseUrl}`, product);
+  createAddress(address: Object): Observable<Object> {
+    return this.http.post(`${this.baseUrl}`, address);
   }
 
-  updateProduct(id: number, value: any): Observable<Object> {
+  updateAddress(id: number, value: any): Observable<Object> {
     return this.http.put(`${this.baseUrl}/${id}`, value);
   }
 
-  deleteProduct(id: number): Observable<any> {
+  deleteAddress(id: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
   }
 
-  getProductsList(): Observable<any> {
+  getAddressList(): Observable<any> {
     return this.http.get(`${this.baseUrl}`);
   }
 

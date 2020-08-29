@@ -37,8 +37,10 @@
 <form [formGroup]="countryForm" (ngSubmit)="callall()">
  <h6>Select a customer:</h6>
  <select formControlName="countryControl">
-   <option [ngValue]="cust" *ngFor="let cust of customerArray">{{cust.companyName}}</option>
+   <option [ngValue]="cust" *ngFor="let cust of customerArray">{{cust.name}}</option>
  </select>
+    <!-- icons from page: https://icons8.com/  -->
+ <a><img class="pointer" src='assets/icons/add_customer.png' (click)="this.myfunction()">Add new customer</a>
  <br>
  <br>
  <button type="submit" class="btn btn-primary"> Complete the order </button>

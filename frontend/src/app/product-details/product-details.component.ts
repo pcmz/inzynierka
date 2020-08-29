@@ -6,6 +6,8 @@ import { CartService } from '../cart.service';
 import { ProductListComponent } from '../product-list/product-list.component';
 import { Router, ActivatedRoute } from '@angular/router';
 
+import { Observable, of } from "rxjs";
+
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
@@ -37,6 +39,7 @@ export class ProductDetailsComponent implements OnInit {
 
     //cart
     this.count = 1;
+
   }
 
   list(){

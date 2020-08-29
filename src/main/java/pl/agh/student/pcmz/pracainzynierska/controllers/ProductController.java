@@ -1,6 +1,13 @@
 package pl.agh.student.pcmz.pracainzynierska.controllers;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.agh.student.pcmz.pracainzynierska.exception.ResourceNotFoundException;
@@ -8,6 +15,7 @@ import pl.agh.student.pcmz.pracainzynierska.models.Product;
 import pl.agh.student.pcmz.pracainzynierska.repositories.ProductRepository;
 
 import javax.validation.Valid;
+import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +29,23 @@ public class ProductController {
 
     @GetMapping("/products")
     public List<Product> getAllProducts() {
+//        CloseableHttpClient httpclient = HttpClients.createDefault();
+//        String url = "https://rejestr.io/api/v1/krs/5239";
+//        HttpGet httpPost = new HttpGet (url);
+//
+//        httpPost.addHeader("Authorization" , "a1236708-27c8-49ef-ad84-88ba951dd908");
+//        String result = null;
+//        try {
+//            HttpResponse response = httpclient.execute(httpPost);
+//            HttpEntity entity = response.getEntity();
+//            InputStream instream = entity.getContent();
+//            result = convertStreamToString(instream);
+//            JSONObject myObject = new JSONObject(result);
+//
+//            System.out.println(myObject);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         return productRepository.findAll();
     }
 
@@ -66,4 +91,5 @@ public class ProductController {
         response.put("deleted", Boolean.TRUE);
         return response;
     }
+
 }
