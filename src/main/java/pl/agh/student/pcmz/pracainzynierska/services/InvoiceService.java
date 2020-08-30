@@ -1,6 +1,5 @@
 package pl.agh.student.pcmz.pracainzynierska.services;
 
-import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 import pl.agh.student.pcmz.pracainzynierska.integrations.invoice.fakturaxl.FakturaXlCrd;
 import pl.agh.student.pcmz.pracainzynierska.integrations.invoice.fakturaxl.model.Dokument;
@@ -20,7 +19,6 @@ import java.util.List;
 
 import static pl.agh.student.pcmz.pracainzynierska.integrations.invoice.fakturaxl.FakturaXlUtils.*;
 
-@Log
 @Service
 public class InvoiceService {
 
@@ -45,7 +43,6 @@ public class InvoiceService {
     }
 
     public Invoice createInvoice(Order order) throws IOException {
-        log.warning("InvoiceService#createInvoice");
         Dokument invoiceBasedOnCart = createInvoiceBasedOnCart(order);
         enrichDokument(invoiceBasedOnCart);
         Dokument invoiceDokument = FakturaXlCrd.createInvoice(invoiceBasedOnCart);
@@ -91,13 +88,13 @@ public class InvoiceService {
         dokument.setWartoscBrutto(String.format("%.2f", wartoscBrutto).replace(',', '.'));
 
         Customer customer = order.getCustomer();
-//        String shippingAddress = customer.getShippingAddress();
+        Address address = customer.getAddress();
         Podmiot nabywca = new Podmiot();
-//        nabywca.setNazwa(customer.getCompanyName());
+        nabywca.setNazwa(customer.getName());
         nabywca.setNip(customer.getNip());
-//        nabywca.setUlicaINumer(shippingAddress.substring(0, shippingAddress.lastIndexOf(',')));
-//        nabywca.setKodPocztowy(shippingAddress.substring(shippingAddress.length() - 6));
-//        nabywca.setMiejscowosc(shippingAddress.substring(shippingAddress.lastIndexOf(',') + 2, shippingAddress.lastIndexOf(' ')));
+        nabywca.setUlicaINumer(address.getStreet() + " " + address.getHouse_no());
+        nabywca.setKodPocztowy(address.getCode());
+        nabywca.setMiejscowosc(address.getCity());
         nabywca.setKraj(KRAJ);
         dokument.setNabywca(nabywca);
         return dokument;
