@@ -70,12 +70,13 @@ public class InvoiceService {
             fakturaPozycje.setIlosc(String.valueOf(quantity));
             fakturaPozycje.setJm(product.getUnit());
             Float unitPrice = product.getUnitPrice();
-            fakturaPozycje.setNetto(String.valueOf(unitPrice));
             Integer vat = product.getVat();
-            double brutto = unitPrice * (1 + (Double.valueOf(vat) / 100));
+            double brutto = unitPrice;
+            double netto = unitPrice / (1 + (Double.valueOf(vat) / 100));
+            fakturaPozycje.setNetto(String.valueOf(netto));
             fakturaPozycje.setBrutto(String.valueOf(brutto).replace(',', '.'));
             fakturaPozycje.setVat(String.valueOf(vat).replace(',', '.'));
-            float wNetto = quantity * unitPrice;
+            double wNetto = quantity * netto;
             fakturaPozycje.setWartoscNetto(String.valueOf(wNetto).replace(',', '.'));
             double wBrutto = quantity * brutto;
             fakturaPozycje.setWartoscBrutto(String.valueOf(wBrutto).replace(',', '.'));
