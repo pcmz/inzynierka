@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import java.util.Objects;
 
+import static pl.agh.student.pcmz.pracainzynierska.util.StringSanitizer.sanitizeDiacritics;
+
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class FakturaPozycje {
@@ -25,7 +27,7 @@ public class FakturaPozycje {
     }
 
     public void setNazwa(String nazwa) {
-        this.nazwa = nazwa;
+        this.nazwa = sanitizeDiacritics(nazwa);
     }
 
     public String getPkwiu() {
@@ -33,7 +35,7 @@ public class FakturaPozycje {
     }
 
     public void setPkwiu(String pkwiu) {
-        this.pkwiu = pkwiu;
+        this.pkwiu = sanitizeDiacritics(pkwiu);
     }
 
     public String getRabat() {
@@ -41,7 +43,7 @@ public class FakturaPozycje {
     }
 
     public void setRabat(String rabat) {
-        this.rabat = rabat;
+        this.rabat = sanitizeDiacritics(rabat);
     }
 
     public String getIlosc() {
@@ -49,7 +51,7 @@ public class FakturaPozycje {
     }
 
     public void setIlosc(String ilosc) {
-        this.ilosc = ilosc;
+        this.ilosc = sanitizeDiacritics(ilosc);
     }
 
     public String getJm() {
@@ -57,7 +59,7 @@ public class FakturaPozycje {
     }
 
     public void setJm(String jm) {
-        this.jm = jm;
+        this.jm = sanitizeDiacritics(jm);
     }
 
     public String getNetto() {
@@ -65,7 +67,7 @@ public class FakturaPozycje {
     }
 
     public void setNetto(String netto) {
-        this.netto = netto;
+        this.netto = sanitizeDiacritics(netto);
     }
 
     public String getBrutto() {
@@ -73,7 +75,7 @@ public class FakturaPozycje {
     }
 
     public void setBrutto(String brutto) {
-        this.brutto = brutto;
+        this.brutto = sanitizeDiacritics(brutto);
     }
 
     public String getVat() {
@@ -81,7 +83,7 @@ public class FakturaPozycje {
     }
 
     public void setVat(String vat) {
-        this.vat = vat;
+        this.vat = sanitizeDiacritics(vat);
     }
 
     public String getWartoscNetto() {
@@ -89,7 +91,7 @@ public class FakturaPozycje {
     }
 
     public void setWartoscNetto(String wartoscNetto) {
-        this.wartoscNetto = wartoscNetto;
+        this.wartoscNetto = sanitizeDiacritics(wartoscNetto);
     }
 
     public String getWartoscBrutto() {
@@ -97,7 +99,7 @@ public class FakturaPozycje {
     }
 
     public void setWartoscBrutto(String wartoscBrutto) {
-        this.wartoscBrutto = wartoscBrutto;
+        this.wartoscBrutto = sanitizeDiacritics(wartoscBrutto);
     }
 
     @Override

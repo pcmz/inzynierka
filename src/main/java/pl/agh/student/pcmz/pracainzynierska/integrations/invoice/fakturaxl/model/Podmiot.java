@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import java.util.Objects;
 
+import static pl.agh.student.pcmz.pracainzynierska.util.StringSanitizer.sanitizeDiacritics;
+
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Podmiot {
@@ -30,7 +32,7 @@ public class Podmiot {
     }
 
     public void setNazwa(String nazwa) {
-        this.nazwa = nazwa;
+        this.nazwa = sanitizeDiacritics(nazwa);
     }
 
     public String getNip() {
@@ -38,7 +40,7 @@ public class Podmiot {
     }
 
     public void setNip(String nip) {
-        this.nip = nip;
+        this.nip = sanitizeDiacritics(nip);
     }
 
     public String getUlicaINumer() {
@@ -46,7 +48,7 @@ public class Podmiot {
     }
 
     public void setUlicaINumer(String ulicaINumer) {
-        this.ulicaINumer = ulicaINumer;
+        this.ulicaINumer = sanitizeDiacritics(ulicaINumer);
     }
 
     public String getKodPocztowy() {
@@ -54,7 +56,7 @@ public class Podmiot {
     }
 
     public void setKodPocztowy(String kodPocztowy) {
-        this.kodPocztowy = kodPocztowy;
+        this.kodPocztowy = sanitizeDiacritics(kodPocztowy);
     }
 
     public String getMiejscowosc() {
@@ -62,7 +64,7 @@ public class Podmiot {
     }
 
     public void setMiejscowosc(String miejscowosc) {
-        this.miejscowosc = miejscowosc;
+        this.miejscowosc = sanitizeDiacritics(miejscowosc);
     }
 
     public String getKrajId() {
@@ -70,7 +72,7 @@ public class Podmiot {
     }
 
     public void setKrajId(String krajId) {
-        this.krajId = krajId;
+        this.krajId = sanitizeDiacritics(krajId);
     }
 
     public String getKraj() {
@@ -78,7 +80,7 @@ public class Podmiot {
     }
 
     public void setKraj(String kraj) {
-        this.kraj = kraj;
+        this.kraj = sanitizeDiacritics(kraj);
     }
 
     public String getEmail() {
@@ -86,7 +88,7 @@ public class Podmiot {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = sanitizeDiacritics(email);
     }
 
     public String getTelefon() {
@@ -94,7 +96,7 @@ public class Podmiot {
     }
 
     public void setTelefon(String telefon) {
-        this.telefon = telefon;
+        this.telefon = sanitizeDiacritics(telefon);
     }
 
     public String getFax() {
@@ -102,7 +104,7 @@ public class Podmiot {
     }
 
     public void setFax(String fax) {
-        this.fax = fax;
+        this.fax = sanitizeDiacritics(fax);
     }
 
     public String getWww() {
@@ -110,7 +112,7 @@ public class Podmiot {
     }
 
     public void setWww(String www) {
-        this.www = www;
+        this.www = sanitizeDiacritics(www);
     }
 
     public String getNrKontaBankowego() {
@@ -118,7 +120,7 @@ public class Podmiot {
     }
 
     public void setNrKontaBankowego(String nrKontaBankowego) {
-        this.nrKontaBankowego = nrKontaBankowego;
+        this.nrKontaBankowego = sanitizeDiacritics(nrKontaBankowego);
     }
 
     @Override

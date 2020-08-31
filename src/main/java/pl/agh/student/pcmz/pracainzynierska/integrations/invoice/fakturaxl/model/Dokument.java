@@ -9,6 +9,8 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import java.util.List;
 import java.util.Objects;
 
+import static pl.agh.student.pcmz.pracainzynierska.util.StringSanitizer.sanitizeDiacritics;
+
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Dokument {
@@ -53,7 +55,7 @@ public class Dokument {
     }
 
     public void setKod(String kod) {
-        this.kod = kod;
+        this.kod = sanitizeDiacritics(kod);
     }
 
     public String getDokumentId() {
@@ -61,7 +63,7 @@ public class Dokument {
     }
 
     public void setDokumentId(String dokumentId) {
-        this.dokumentId = dokumentId;
+        this.dokumentId = sanitizeDiacritics(dokumentId);
     }
 
     public String getDokumentNr() {
@@ -69,7 +71,7 @@ public class Dokument {
     }
 
     public void setDokumentNr(String dokumentNr) {
-        this.dokumentNr = dokumentNr;
+        this.dokumentNr = sanitizeDiacritics(dokumentNr);
     }
 
     public String getDokumnetNr() {
@@ -77,7 +79,7 @@ public class Dokument {
     }
 
     public void setDokumnetNr(String dokumnetNr) {
-        this.dokumnetNr = dokumnetNr;
+        this.dokumnetNr = sanitizeDiacritics(dokumnetNr);
     }
 
     public String getApiToken() {
@@ -93,7 +95,7 @@ public class Dokument {
     }
 
     public void setTypFaktury(String typFaktury) {
-        this.typFaktury = typFaktury;
+        this.typFaktury = sanitizeDiacritics(typFaktury);
     }
 
     public String getNumerFaktury() {
@@ -101,7 +103,7 @@ public class Dokument {
     }
 
     public void setNumerFaktury(String numerFaktury) {
-        this.numerFaktury = numerFaktury;
+        this.numerFaktury = sanitizeDiacritics(numerFaktury);
     }
 
     public String getDataWystawienia() {
@@ -109,7 +111,7 @@ public class Dokument {
     }
 
     public void setDataWystawienia(String dataWystawienia) {
-        this.dataWystawienia = dataWystawienia;
+        this.dataWystawienia = sanitizeDiacritics(dataWystawienia);
     }
 
     public String getDataSprzedazy() {
@@ -117,7 +119,7 @@ public class Dokument {
     }
 
     public void setDataSprzedazy(String dataSprzedazy) {
-        this.dataSprzedazy = dataSprzedazy;
+        this.dataSprzedazy = sanitizeDiacritics(dataSprzedazy);
     }
 
     public String getTerminPlatnosciData() {
@@ -125,7 +127,7 @@ public class Dokument {
     }
 
     public void setTerminPlatnosciData(String terminPlatnosciData) {
-        this.terminPlatnosciData = terminPlatnosciData;
+        this.terminPlatnosciData = sanitizeDiacritics(terminPlatnosciData);
     }
 
     public String getStatus() {
@@ -133,7 +135,7 @@ public class Dokument {
     }
 
     public void setStatus(String status) {
-        this.status = status;
+        this.status = sanitizeDiacritics(status);
     }
 
     public String getUnikatowyKod() {
@@ -141,7 +143,7 @@ public class Dokument {
     }
 
     public void setUnikatowyKod(String unikatowyKod) {
-        this.unikatowyKod = unikatowyKod;
+        this.unikatowyKod = sanitizeDiacritics(unikatowyKod);
     }
 
     public String getDataOplacenia() {
@@ -149,7 +151,7 @@ public class Dokument {
     }
 
     public void setDataOplacenia(String dataOplacenia) {
-        this.dataOplacenia = dataOplacenia;
+        this.dataOplacenia = sanitizeDiacritics(dataOplacenia);
     }
 
     public String getKwotaOplacona() {
@@ -157,7 +159,7 @@ public class Dokument {
     }
 
     public void setKwotaOplacona(String kwotaOplacona) {
-        this.kwotaOplacona = kwotaOplacona;
+        this.kwotaOplacona = sanitizeDiacritics(kwotaOplacona);
     }
 
     public String getUwagi() {
@@ -165,7 +167,7 @@ public class Dokument {
     }
 
     public void setUwagi(String uwagi) {
-        this.uwagi = uwagi;
+        this.uwagi = sanitizeDiacritics(uwagi);
     }
 
     public String getWaluta() {
@@ -173,7 +175,7 @@ public class Dokument {
     }
 
     public void setWaluta(String waluta) {
-        this.waluta = waluta;
+        this.waluta = sanitizeDiacritics(waluta);
     }
 
     public String getKurs() {
@@ -181,7 +183,7 @@ public class Dokument {
     }
 
     public void setKurs(String kurs) {
-        this.kurs = kurs;
+        this.kurs = sanitizeDiacritics(kurs);
     }
 
     public String getRodzajPlatnosci() {
@@ -189,7 +191,7 @@ public class Dokument {
     }
 
     public void setRodzajPlatnosci(String rodzajPlatnosci) {
-        this.rodzajPlatnosci = rodzajPlatnosci;
+        this.rodzajPlatnosci = sanitizeDiacritics(rodzajPlatnosci);
     }
 
     public String getJezyk() {
@@ -197,7 +199,7 @@ public class Dokument {
     }
 
     public void setJezyk(String jezyk) {
-        this.jezyk = jezyk;
+        this.jezyk = sanitizeDiacritics(jezyk);
     }
 
     public String getImieNazwiskoWystawcy() {
@@ -205,7 +207,7 @@ public class Dokument {
     }
 
     public void setImieNazwiskoWystawcy(String imieNazwiskoWystawcy) {
-        this.imieNazwiskoWystawcy = imieNazwiskoWystawcy;
+        this.imieNazwiskoWystawcy = sanitizeDiacritics(imieNazwiskoWystawcy);
     }
 
     public String getImieNazwiskoOdbiorcy() {
@@ -213,7 +215,7 @@ public class Dokument {
     }
 
     public void setImieNazwiskoOdbiorcy(String imieNazwiskoOdbiorcy) {
-        this.imieNazwiskoOdbiorcy = imieNazwiskoOdbiorcy;
+        this.imieNazwiskoOdbiorcy = sanitizeDiacritics(imieNazwiskoOdbiorcy);
     }
 
     public String getNrZamowienia() {
@@ -221,7 +223,7 @@ public class Dokument {
     }
 
     public void setNrZamowienia(String nrZamowienia) {
-        this.nrZamowienia = nrZamowienia;
+        this.nrZamowienia = sanitizeDiacritics(nrZamowienia);
     }
 
     public String getDodatkoweUwagi() {
@@ -229,7 +231,7 @@ public class Dokument {
     }
 
     public void setDodatkoweUwagi(String dodatkoweUwagi) {
-        this.dodatkoweUwagi = dodatkoweUwagi;
+        this.dodatkoweUwagi = sanitizeDiacritics(dodatkoweUwagi);
     }
 
     public String getWartoscNetto() {
@@ -237,7 +239,7 @@ public class Dokument {
     }
 
     public void setWartoscNetto(String wartoscNetto) {
-        this.wartoscNetto = wartoscNetto;
+        this.wartoscNetto = sanitizeDiacritics(wartoscNetto);
     }
 
     public String getWartoscVat() {
@@ -245,7 +247,7 @@ public class Dokument {
     }
 
     public void setWartoscVat(String wartoscVat) {
-        this.wartoscVat = wartoscVat;
+        this.wartoscVat = sanitizeDiacritics(wartoscVat);
     }
 
     public String getWartoscBrutto() {
@@ -253,7 +255,7 @@ public class Dokument {
     }
 
     public void setWartoscBrutto(String wartoscBrutto) {
-        this.wartoscBrutto = wartoscBrutto;
+        this.wartoscBrutto = sanitizeDiacritics(wartoscBrutto);
     }
 
     public String getIdDzialyFirmy() {
@@ -261,7 +263,7 @@ public class Dokument {
     }
 
     public void setIdDzialyFirmy(String idDzialyFirmy) {
-        this.idDzialyFirmy = idDzialyFirmy;
+        this.idDzialyFirmy = sanitizeDiacritics(idDzialyFirmy);
     }
 
     public String getWyslijDokumentDoKlientaEmailem() {
@@ -269,7 +271,7 @@ public class Dokument {
     }
 
     public void setWyslijDokumentDoKlientaEmailem(String wyslijDokumentDoKlientaEmailem) {
-        this.wyslijDokumentDoKlientaEmailem = wyslijDokumentDoKlientaEmailem;
+        this.wyslijDokumentDoKlientaEmailem = sanitizeDiacritics(wyslijDokumentDoKlientaEmailem);
     }
 
     public String getMagazynId() {
@@ -277,7 +279,7 @@ public class Dokument {
     }
 
     public void setMagazynId(String magazynId) {
-        this.magazynId = magazynId;
+        this.magazynId = sanitizeDiacritics(magazynId);
     }
 
     public Podmiot getSprzedawca() {
