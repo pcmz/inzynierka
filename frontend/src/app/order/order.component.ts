@@ -19,8 +19,10 @@ export class OrderComponent implements OnInit {
   orders: Observable<Order[]>;
   cartsArray = [];
   invoices = [];
-  invoicesNames: Map<number, string>;
-  invoicesAddresses: Map<number, string>;
+  proformaInvoicesNames: Map<number, string>;
+  vatInvoicesNames: Map<number, string>;
+  proformaInvoicesAddresses: Map<number, string>;
+  vatInvoicesAddresses: Map<number, string>;
 
   constructor(private orderService: OrderService,
               private router: Router, private orderDetailsService: OrderDetailsService, private cartService: CartService, private invoiceService: InvoiceService) {
@@ -57,18 +59,33 @@ export class OrderComponent implements OnInit {
     this.router.navigate(['order_details', id]);
   }
 
-  downloadInvoice(order_id: number) {
-    var key = order_id;
-    console.log("key = " + key)
-    var href = this.invoicesAddresses.get(key);
-    console.log("href = " + href)
-    window.location.href = href;
-    this.router.navigate(['orders'])
+  openInNewTabProformaInvoice(order_id: number) {
+    window.open(this.proformaInvoicesAddresses.get(order_id), "_blank");
+  }
+
+  createVatInvoice(order_id: number) {
+    this.invoiceService.promoteProformaInvoiceIntoVat(order_id).subscribe((invoice: Invoice) => {
+      this.invoiceService.getVatInvoiceAddresByOrderId(invoice.order.id).subscribe((newAddress: string) => {
+        this.vatInvoicesAddresses.set(order_id, newAddress);
+        this.redirectTo('orders');
+      })
+    });
+  }
+
+  createOrOpenVatInvoice(order_id: number) {
+    const href = this.vatInvoicesAddresses.get(order_id);
+    if (href != undefined) {
+      window.open(href, "_blank");
+    } else {
+      this.createVatInvoice(order_id);
+    }
   }
 
   populateInvoices() {
-    this.invoicesNames = new Map();
-    this.invoicesAddresses = new Map();
+    this.proformaInvoicesNames = new Map();
+    this.vatInvoicesNames = new Map();
+    this.proformaInvoicesAddresses = new Map();
+    this.vatInvoicesAddresses = new Map();
     console.log("Hello form populateInvoices")
     this.invoiceService.getAllInvoice()
       .subscribe((invoice: Invoice[]) => {
@@ -76,10 +93,26 @@ export class OrderComponent implements OnInit {
         this.invoices = invoice
         console.log(this.invoices)
         this.invoices.forEach(i => console.log(i));
-        this.invoices.forEach((i: Invoice) => this.invoicesNames.set(i.order.id, i.invoiceName));
-        this.invoices.forEach((i: Invoice) => this.invoiceService.getInvoiceAddresByOrderId(i.order.id).subscribe((address: InvoiceAddress) => this.invoicesAddresses.set(i.order.id, address.invoice_address)));
-        this.invoicesNames.forEach((value, key, map) => console.log(value));
-        this.invoicesAddresses.forEach((value, key, map) => console.log(value));
+        this.invoices.forEach((i: Invoice) => {
+          this.proformaInvoicesNames.set(i.order.id, i.invoiceNameProforma)
+          if (i.invoiceNameVat != null) {
+            this.vatInvoicesNames.set(i.order.id, i.invoiceNameVat)
+          } else {
+            this.vatInvoicesNames.set(i.order.id, "create VAT")
+          }
+        });
+        this.invoices.forEach((i: Invoice) => {
+          this.invoiceService.getProformaInvoiceAddresByOrderId(i.order.id).subscribe((address: InvoiceAddress) => {
+            this.proformaInvoicesAddresses.set(i.order.id, address.invoice_address)
+          })
+        });
+        this.invoices.forEach((i: Invoice) => {
+          this.invoiceService.getVatInvoiceAddresByOrderId(i.order.id).subscribe((address: InvoiceAddress) => {
+            if (!address.invoice_address.includes("null")) {
+              this.vatInvoicesAddresses.set(i.order.id, address.invoice_address)
+            }
+          })
+        });
       })
   }
 

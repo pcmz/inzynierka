@@ -24,8 +24,13 @@ public class InvoiceController {
     }
 
     @PostMapping("/invoice")
-    public Invoice createInvoice(@Valid @RequestBody Order order) throws IOException {
-        return invoiceService.createInvoice(order);
+    public Invoice createProformaInvoice(@Valid @RequestBody Order order) throws IOException {
+        return invoiceService.createProformaInvoice(order);
+    }
+
+    @GetMapping("/promote_invoice/{orderId}")
+    public Invoice promoteProformaInvoiceIntoVat(@PathVariable Long orderId) throws IOException {
+        return invoiceService.promoteProformaInvoiceIntoVat(orderId);
     }
 
     @GetMapping("/invoice_pdf/{orderId}")
@@ -34,9 +39,14 @@ public class InvoiceController {
         invoiceService.getInvoiceAsPDF(orderId, request, response);
     }
 
-    @GetMapping("/invoice_pdf_address/{orderId}")
+    @GetMapping("/proforma_invoice_pdf_address/{orderId}")
     public InvoiceAddress getInvoicePdfAddress(@PathVariable Long orderId) {
-        return invoiceService.getInvoicePdfAddress(orderId);
+        return invoiceService.getProformaInvoicePdfAddress(orderId);
+    }
+
+    @GetMapping("/vat_invoice_pdf_address/{orderId}")
+    public InvoiceAddress getVatPdfAddress(@PathVariable Long orderId) {
+        return invoiceService.getVatInvoicePdfAddress(orderId);
     }
 
     @GetMapping("/invoice_by_order_id/{orderId}")

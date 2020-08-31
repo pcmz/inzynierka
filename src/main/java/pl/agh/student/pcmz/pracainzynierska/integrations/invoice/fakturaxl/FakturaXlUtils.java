@@ -18,7 +18,10 @@ public class FakturaXlUtils {
 
     public static final String API_TOKEN = "5hkOiYF3f1MfCEVwZ2s6hEjQdkrXNDgw2qj7QZyZiLL4Y7RJUD8UYqxEL8peq5yjA6SHx5i6QjdHVG9k";
     public static final String HOSTNAME = "https://program.fakturaxl.pl";
-    public static final String TYP_FAKTURY = "0";
+    public static final String TYP_FAKTURY_VAT = "0";
+    public static final String TYP_FAKTURY_PROFORMA = "1";
+    public static final String STATUS_NIEOPLACONA = "0";
+    public static final String STATUS_OPLACONA = "2";
     public static final String COMPANY_NAME = "przyszli inzynierowie";
     public static final String COMPANY_NIP = "675-00-01-923";
     public static final String COMPANY_STREET = "ul. Krakowska 987";

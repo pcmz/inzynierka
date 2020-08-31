@@ -34,23 +34,23 @@ public class InvoiceService {
 
     public String getInvoiceAsPDF(Long orderId, HttpServletRequest request, HttpServletResponse response) throws IOException {
         Invoice invoice = invoiceRepository.getByOrder(orderRepository.findById(orderId));
-        String fakturaXlId = invoice.getFakturaXlId();
+        String fakturaXlId = getNewestFakturaXlId(invoice);
         return FakturaXlCrd.getInvoiceAsPDF(fakturaXlId, request, response);
     }
 
     public Invoice createInvoiceByOrderId(Long orderId) throws IOException {
-        return createInvoice(orderRepository.findById(orderId).get());
+        return createProformaInvoice(orderRepository.findById(orderId).get());
     }
 
-    public Invoice createInvoice(Order order) throws IOException {
+    public Invoice createProformaInvoice(Order order) throws IOException {
         Dokument invoiceBasedOnCart = createInvoiceBasedOnCart(order);
         enrichDokument(invoiceBasedOnCart);
-        Dokument invoiceDokument = FakturaXlCrd.createInvoice(invoiceBasedOnCart);
+        Dokument invoiceDokument = FakturaXlCrd.createProformaInvoice(invoiceBasedOnCart);
 
         Invoice invoiceDAO = new Invoice();
         invoiceDAO.setOrder(order);
-        invoiceDAO.setFakturaXlId(invoiceDokument.getDokumentId());
-        invoiceDAO.setInvoiceName(invoiceDokument.getDokumnetNr());
+        invoiceDAO.setFakturaXlIdProforma(invoiceDokument.getDokumentId());
+        invoiceDAO.setInvoiceNameProforma(invoiceDokument.getDokumnetNr());
         return invoiceRepository.save(invoiceDAO);
     }
 
@@ -108,7 +108,30 @@ public class InvoiceService {
         return invoiceRepository.findAll();
     }
 
-    public InvoiceAddress getInvoicePdfAddress(Long orderId) {
-        return new InvoiceAddress(HOSTNAME + "/dokument_export.php?api=" + API_TOKEN + "&dokument_id=" + invoiceRepository.getByOrder(orderRepository.findById(orderId)).getFakturaXlId() + "&pdf=1");
+    public InvoiceAddress getProformaInvoicePdfAddress(Long orderId) {
+        return getInvoicePdfAddress(invoiceRepository.getByOrder(orderRepository.findById(orderId)).getFakturaXlIdProforma());
+    }
+
+    public InvoiceAddress getVatInvoicePdfAddress(Long orderId) {
+        return getInvoicePdfAddress(invoiceRepository.getByOrder(orderRepository.findById(orderId)).getFakturaXlIdVat());
+    }
+
+    public InvoiceAddress getInvoicePdfAddress(String fakturaXlId) {
+        return new InvoiceAddress(HOSTNAME + "/dokument_export.php?api=" + API_TOKEN + "&dokument_id=" + fakturaXlId + "&pdf=2");
+    }
+
+    public Invoice promoteProformaInvoiceIntoVat(Long orderId) throws IOException {
+        Invoice oldInvoice = invoiceRepository.getByOrder(orderRepository.findById(orderId));
+        Dokument proformaInvoice = FakturaXlCrd.getInvoice(oldInvoice.getFakturaXlIdProforma());
+        Dokument vatInvoice = FakturaXlCrd.createVatInvoice(proformaInvoice);
+        oldInvoice.setFakturaXlIdVat(vatInvoice.getDokumentId());
+        oldInvoice.setInvoiceNameVat(vatInvoice.getDokumnetNr());
+        Invoice save = invoiceRepository.save(oldInvoice);
+        return save;
+    }
+
+    private String getNewestFakturaXlId(Invoice invoice) {
+        String fakturaXlIdVat = invoice.getFakturaXlIdVat();
+        return fakturaXlIdVat == null ? invoice.getFakturaXlIdProforma() : fakturaXlIdVat;
     }
 }

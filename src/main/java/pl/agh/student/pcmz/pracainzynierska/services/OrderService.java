@@ -1,6 +1,5 @@
 package pl.agh.student.pcmz.pracainzynierska.services;
 
-import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 import pl.agh.student.pcmz.pracainzynierska.models.Order;
 import pl.agh.student.pcmz.pracainzynierska.repositories.OrderRepository;
@@ -9,7 +8,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-@Log
 @Service
 public class OrderService {
     private final OrderRepository orderRepository;
@@ -26,9 +24,8 @@ public class OrderService {
     }
 
     public Order finalizeOrder(Order order) throws IOException {
-        log.warning("OrderService#finalizeOrder()");
         Order savedOrder = save(order);
-        invoiceService.createInvoice(order);
+        invoiceService.createProformaInvoice(order);
         orderDetailsService.createOrderDetails(order);
         cartService.deleteAll();
         return savedOrder;

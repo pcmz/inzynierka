@@ -1,13 +1,6 @@
 package pl.agh.student.pcmz.pracainzynierska.controllers;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.agh.student.pcmz.pracainzynierska.exception.ResourceNotFoundException;
@@ -15,7 +8,6 @@ import pl.agh.student.pcmz.pracainzynierska.models.Product;
 import pl.agh.student.pcmz.pracainzynierska.repositories.ProductRepository;
 
 import javax.validation.Valid;
-import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,7 +56,7 @@ public class ProductController {
 
     @PutMapping("/products/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable(value = "id") Long productId,
-                                                   @Valid @RequestBody Product productDetails) throws ResourceNotFoundException {
+                                                 @Valid @RequestBody Product productDetails) throws ResourceNotFoundException {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new ResourceNotFoundException("productId not found for this id :: " + productId));
 

@@ -12,8 +12,12 @@ export class InvoiceService {
   constructor(private http: HttpClient) {
   }
 
-  getInvoiceAddresByOrderId(order_id: number): Observable<Object> {
-    return this.http.get(`${this.baseUrl}/invoice_pdf_address/${order_id}`)
+  getProformaInvoiceAddresByOrderId(order_id: number): Observable<Object> {
+    return this.http.get(`${this.baseUrl}/proforma_invoice_pdf_address/${order_id}`)
+  }
+
+  getVatInvoiceAddresByOrderId(order_id: number): Observable<Object> {
+    return this.http.get(`${this.baseUrl}/vat_invoice_pdf_address/${order_id}`)
   }
 
   downloadFile(address: string): Observable<Blob> {
@@ -30,5 +34,9 @@ export class InvoiceService {
 
   createInvoice(order: Object): Observable<Object> {
     return this.http.post(`${this.baseUrl}/invoice`, order);
+  }
+
+  promoteProformaInvoiceIntoVat(order_id: number): Observable<Object> {
+    return this.http.get(`${this.baseUrl}/promote_invoice/${order_id}`);
   }
 }
