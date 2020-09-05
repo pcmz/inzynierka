@@ -87,7 +87,7 @@ export class OrderComponent implements OnInit {
     this.proformaInvoicesAddresses = new Map();
     this.vatInvoicesAddresses = new Map();
     console.log("Hello form populateInvoices")
-    this.invoiceService.getAllInvoice()
+    this.invoiceService.getAllInvoices()
       .subscribe((invoice: Invoice[]) => {
         console.log(invoice)
         this.invoices = invoice

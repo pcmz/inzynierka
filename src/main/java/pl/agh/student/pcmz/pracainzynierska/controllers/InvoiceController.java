@@ -6,8 +6,6 @@ import pl.agh.student.pcmz.pracainzynierska.models.Order;
 import pl.agh.student.pcmz.pracainzynierska.services.InvoiceService;
 import pl.agh.student.pcmz.pracainzynierska.util.InvoiceAddress;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
@@ -28,15 +26,14 @@ public class InvoiceController {
         return invoiceService.createProformaInvoice(order);
     }
 
-    @GetMapping("/promote_invoice/{orderId}")
-    public Invoice promoteProformaInvoiceIntoVat(@PathVariable Long orderId) throws IOException {
-        return invoiceService.promoteProformaInvoiceIntoVat(orderId);
+    @GetMapping("/invoice_by_order_id/{orderId}")
+    public Invoice getInvoiceByOrderId(@PathVariable Long orderId) {
+        return invoiceService.getInvoiceByOrderId(orderId);
     }
 
-    @GetMapping("/invoice_pdf/{orderId}")
-    public void getInvoiceAsPDF(@PathVariable Long orderId,
-                                HttpServletRequest request, HttpServletResponse response) throws IOException {
-        invoiceService.getInvoiceAsPDF(orderId, request, response);
+    @GetMapping("/invoice/all")
+    public List<Invoice> getAllInvoices() {
+        return invoiceService.getAllInvoices();
     }
 
     @GetMapping("/proforma_invoice_pdf_address/{orderId}")
@@ -49,13 +46,8 @@ public class InvoiceController {
         return invoiceService.getVatInvoicePdfAddress(orderId);
     }
 
-    @GetMapping("/invoice_by_order_id/{orderId}")
-    public Invoice getInvoiceByOrderId(@PathVariable Long orderId) {
-        return invoiceService.getInvoiceByOrderId(orderId);
-    }
-
-    @GetMapping("/invoice/all")
-    public List<Invoice> getAllInvoices() {
-        return invoiceService.getAllInvoices();
+    @GetMapping("/promote_invoice/{orderId}")
+    public Invoice promoteProformaInvoiceIntoVat(@PathVariable Long orderId) throws IOException {
+        return invoiceService.promoteProformaInvoiceIntoVat(orderId);
     }
 }

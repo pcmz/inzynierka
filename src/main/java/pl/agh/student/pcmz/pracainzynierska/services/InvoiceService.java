@@ -1,7 +1,7 @@
 package pl.agh.student.pcmz.pracainzynierska.services;
 
 import org.springframework.stereotype.Service;
-import pl.agh.student.pcmz.pracainzynierska.integrations.invoice.fakturaxl.FakturaXlCrd;
+import pl.agh.student.pcmz.pracainzynierska.integrations.invoice.fakturaxl.FakturaXlCrud;
 import pl.agh.student.pcmz.pracainzynierska.integrations.invoice.fakturaxl.model.Dokument;
 import pl.agh.student.pcmz.pracainzynierska.integrations.invoice.fakturaxl.model.FakturaPozycje;
 import pl.agh.student.pcmz.pracainzynierska.integrations.invoice.fakturaxl.model.Podmiot;
@@ -11,8 +11,6 @@ import pl.agh.student.pcmz.pracainzynierska.repositories.InvoiceRepository;
 import pl.agh.student.pcmz.pracainzynierska.repositories.OrderRepository;
 import pl.agh.student.pcmz.pracainzynierska.util.InvoiceAddress;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,26 +30,38 @@ public class InvoiceService {
         this.cartRepository = cartRepository;
     }
 
-    public String getInvoiceAsPDF(Long orderId, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Invoice invoice = invoiceRepository.getByOrder(orderRepository.findById(orderId));
-        String fakturaXlId = getNewestFakturaXlId(invoice);
-        return FakturaXlCrd.getInvoiceAsPDF(fakturaXlId, request, response);
-    }
-
-    public Invoice createInvoiceByOrderId(Long orderId) throws IOException {
-        return createProformaInvoice(orderRepository.findById(orderId).get());
-    }
-
     public Invoice createProformaInvoice(Order order) throws IOException {
         Dokument invoiceBasedOnCart = createInvoiceBasedOnCart(order);
-        enrichDokument(invoiceBasedOnCart);
-        Dokument invoiceDokument = FakturaXlCrd.createProformaInvoice(invoiceBasedOnCart);
-
+        Dokument invoiceDokument = FakturaXlCrud.createProformaInvoice(invoiceBasedOnCart);
         Invoice invoiceDAO = new Invoice();
         invoiceDAO.setOrder(order);
         invoiceDAO.setFakturaXlIdProforma(invoiceDokument.getDokumentId());
         invoiceDAO.setInvoiceNameProforma(invoiceDokument.getDokumnetNr());
         return invoiceRepository.save(invoiceDAO);
+    }
+
+    public Invoice getInvoiceByOrderId(Long orderId) {
+        return invoiceRepository.getByOrder(orderRepository.findById(orderId));
+    }
+
+    public List<Invoice> getAllInvoices() {
+        return invoiceRepository.findAll();
+    }
+
+    public InvoiceAddress getProformaInvoicePdfAddress(Long orderId) {
+        return getInvoicePdfAddress(getInvoiceByOrderId(orderId).getFakturaXlIdProforma());
+    }
+
+    public InvoiceAddress getVatInvoicePdfAddress(Long orderId) {
+        return getInvoicePdfAddress(getInvoiceByOrderId(orderId).getFakturaXlIdVat());
+    }
+
+    public Invoice promoteProformaInvoiceIntoVat(Long orderId) throws IOException {
+        Invoice oldInvoice = invoiceRepository.getByOrder(orderRepository.findById(orderId));
+        Dokument vatInvoice = FakturaXlCrud.promoteProformaInvoiceIntoVat(oldInvoice.getFakturaXlIdProforma());
+        oldInvoice.setFakturaXlIdVat(vatInvoice.getDokumentId());
+        oldInvoice.setInvoiceNameVat(vatInvoice.getDokumnetNr());
+        return invoiceRepository.save(oldInvoice);
     }
 
     private Dokument createInvoiceBasedOnCart(Order order) {
@@ -74,19 +84,19 @@ public class InvoiceService {
             double brutto = unitPrice;
             double netto = unitPrice / (1 + (Double.valueOf(vat) / 100));
             fakturaPozycje.setNetto(String.valueOf(netto));
-            fakturaPozycje.setBrutto(String.valueOf(brutto).replace(',', '.'));
-            fakturaPozycje.setVat(String.valueOf(vat).replace(',', '.'));
+            fakturaPozycje.setBrutto(getStringValue(brutto));
+            fakturaPozycje.setVat(String.valueOf(vat));
             double wNetto = quantity * netto;
-            fakturaPozycje.setWartoscNetto(String.valueOf(wNetto).replace(',', '.'));
+            fakturaPozycje.setWartoscNetto(getStringValue(wNetto));
             double wBrutto = quantity * brutto;
-            fakturaPozycje.setWartoscBrutto(String.valueOf(wBrutto).replace(',', '.'));
+            fakturaPozycje.setWartoscBrutto(getStringValue(wBrutto));
             dokument.getFakturaPozycjeList().add(fakturaPozycje);
             wartoscNetto += wNetto;
             wartoscBrutto += wBrutto;
         }
-        dokument.setWartoscNetto(String.format("%.2f", wartoscNetto).replace(',', '.'));
-        dokument.setWartoscVat(String.format("%.2f", wartoscBrutto - wartoscNetto).replace(',', '.'));
-        dokument.setWartoscBrutto(String.format("%.2f", wartoscBrutto).replace(',', '.'));
+        dokument.setWartoscNetto(getStringValue(wartoscNetto));
+        dokument.setWartoscVat(getStringValue(wartoscBrutto - wartoscNetto));
+        dokument.setWartoscBrutto(getStringValue(wartoscBrutto));
 
         Customer customer = order.getCustomer();
         Address address = customer.getAddress();
@@ -101,38 +111,11 @@ public class InvoiceService {
         return dokument;
     }
 
-    public Invoice getInvoiceByOrderId(Long orderId) {
-        return invoiceRepository.getByOrder(orderRepository.findById(orderId));
+    private String getStringValue(double value) {
+        return String.valueOf(value).replace(',', '.');
     }
 
-    public List<Invoice> getAllInvoices() {
-        return invoiceRepository.findAll();
-    }
-
-    public InvoiceAddress getProformaInvoicePdfAddress(Long orderId) {
-        return getInvoicePdfAddress(invoiceRepository.getByOrder(orderRepository.findById(orderId)).getFakturaXlIdProforma());
-    }
-
-    public InvoiceAddress getVatInvoicePdfAddress(Long orderId) {
-        return getInvoicePdfAddress(invoiceRepository.getByOrder(orderRepository.findById(orderId)).getFakturaXlIdVat());
-    }
-
-    public InvoiceAddress getInvoicePdfAddress(String fakturaXlId) {
-        return new InvoiceAddress(HOSTNAME + "/dokument_export.php?api=" + API_TOKEN + "&dokument_id=" + fakturaXlId + "&pdf=2");
-    }
-
-    public Invoice promoteProformaInvoiceIntoVat(Long orderId) throws IOException {
-        Invoice oldInvoice = invoiceRepository.getByOrder(orderRepository.findById(orderId));
-        Dokument proformaInvoice = FakturaXlCrd.getInvoice(oldInvoice.getFakturaXlIdProforma());
-        Dokument vatInvoice = FakturaXlCrd.createVatInvoice(proformaInvoice);
-        oldInvoice.setFakturaXlIdVat(vatInvoice.getDokumentId());
-        oldInvoice.setInvoiceNameVat(vatInvoice.getDokumnetNr());
-        Invoice save = invoiceRepository.save(oldInvoice);
-        return save;
-    }
-
-    private String getNewestFakturaXlId(Invoice invoice) {
-        String fakturaXlIdVat = invoice.getFakturaXlIdVat();
-        return fakturaXlIdVat == null ? invoice.getFakturaXlIdProforma() : fakturaXlIdVat;
+    private InvoiceAddress getInvoicePdfAddress(String fakturaXlId) {
+        return new InvoiceAddress(INVOICE_AS_PDF + fakturaXlId + OPEN_PDF);
     }
 }

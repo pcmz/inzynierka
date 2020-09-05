@@ -18,7 +18,7 @@ public class Invoice {
     @Column(name = "ID", unique = true, nullable = false, length = 11)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "OrderID")
     private Order order;
 

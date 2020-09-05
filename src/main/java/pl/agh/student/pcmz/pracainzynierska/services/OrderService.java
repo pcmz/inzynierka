@@ -25,8 +25,8 @@ public class OrderService {
 
     public Order finalizeOrder(Order order) throws IOException {
         Order savedOrder = save(order);
-        invoiceService.createProformaInvoice(order);
-        orderDetailsService.createOrderDetails(order);
+        invoiceService.createProformaInvoice(savedOrder);
+        orderDetailsService.createOrderDetails(savedOrder);
         cartService.deleteAll();
         return savedOrder;
     }

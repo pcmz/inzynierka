@@ -1,30 +1,24 @@
 package pl.agh.student.pcmz.pracainzynierska.integrations.invoice.fakturaxl;
 
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import pl.agh.student.pcmz.pracainzynierska.integrations.invoice.fakturaxl.model.Dokument;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static pl.agh.student.pcmz.pracainzynierska.integrations.invoice.fakturaxl.FakturaXlUtils.*;
 
-public class FakturaXlCrd {
-
-    private static final XmlMapper mapper = new XmlMapper();
+public class FakturaXlCrud {
 
     public static final Dokument getInvoice(String id) throws IOException {
         Dokument dokument = new Dokument();
         dokument.setDokumentId(id);
         dokument.setApiToken(API_TOKEN);
-        String reguestParams = mapper.writeValueAsString(dokument);
-        String invoiceAsString = makeHttpCall("/api/dokument_odczytaj.php", "GET", reguestParams);
-        return mapper.readValue(invoiceAsString, Dokument.class);
+        return makeHttpCall("/api/dokument_odczytaj.php", dokument);
     }
 
     public static final Dokument createProformaInvoice(Dokument dokument) throws IOException {
+        enrichDokument(dokument);
         dokument.setTypFaktury(TYP_FAKTURY_PROFORMA);
         dokument.setStatus(STATUS_NIEOPLACONA);
         return createInvoice(dokument);
@@ -47,18 +41,12 @@ public class FakturaXlCrd {
         return createInvoice(dokument);
     }
 
-    public static final Dokument createInvoice(Dokument dokument) throws IOException {
-        dokument.setApiToken(API_TOKEN);
-        String reguestParams = mapper.writeValueAsString(dokument);
-        String invoiceAsString = makeHttpCall("/api/dokument_dodaj.php", "GET", reguestParams);
-        Dokument dokument1 = mapper.readValue(invoiceAsString, Dokument.class);
-        return dokument1;
+    public static final Dokument promoteProformaInvoiceIntoVat(String proformaInvoiceId) throws IOException {
+        return createVatInvoice(getInvoice(proformaInvoiceId));
     }
 
-    public static final String getInvoiceAsPDF(String id, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Dokument dokument = new Dokument();
-        dokument.setDokumentId(id);
+    public static final Dokument createInvoice(Dokument dokument) throws IOException {
         dokument.setApiToken(API_TOKEN);
-        return makeHttpCallForInvoicePDF("/dokument_export.php?api=" + API_TOKEN + "&dokument_id=" + id + "&pdf=1", request, response);
+        return makeHttpCall("/api/dokument_dodaj.php", dokument);
     }
 }

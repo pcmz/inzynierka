@@ -12,28 +12,24 @@ export class InvoiceService {
   constructor(private http: HttpClient) {
   }
 
-  getProformaInvoiceAddresByOrderId(order_id: number): Observable<Object> {
-    return this.http.get(`${this.baseUrl}/proforma_invoice_pdf_address/${order_id}`)
-  }
-
-  getVatInvoiceAddresByOrderId(order_id: number): Observable<Object> {
-    return this.http.get(`${this.baseUrl}/vat_invoice_pdf_address/${order_id}`)
-  }
-
-  downloadFile(address: string): Observable<Blob> {
-    return this.http.get<Blob>(`${address}`)
+  createInvoice(order: Object): Observable<Object> {
+    return this.http.post(`${this.baseUrl}/invoice`, order);
   }
 
   getInvoice(orderId: number): Observable<Object> {
     return this.http.get(`${this.baseUrl}/invoice_by_order_id/${orderId}`)
   }
 
-  getAllInvoice(): Observable<any> {
+  getAllInvoices(): Observable<any> {
     return this.http.get(`${this.baseUrl}/invoice/all`)
   }
 
-  createInvoice(order: Object): Observable<Object> {
-    return this.http.post(`${this.baseUrl}/invoice`, order);
+  getProformaInvoiceAddresByOrderId(order_id: number): Observable<Object> {
+    return this.http.get(`${this.baseUrl}/proforma_invoice_pdf_address/${order_id}`)
+  }
+
+  getVatInvoiceAddresByOrderId(order_id: number): Observable<Object> {
+    return this.http.get(`${this.baseUrl}/vat_invoice_pdf_address/${order_id}`)
   }
 
   promoteProformaInvoiceIntoVat(order_id: number): Observable<Object> {
