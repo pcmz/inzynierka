@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import pl.agh.student.pcmz.pracainzynierska.models.Order;
 import pl.agh.student.pcmz.pracainzynierska.repositories.OrderRepository;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,18 +14,21 @@ public class OrderService {
     private final OrderDetailsService orderDetailsService;
     private final InvoiceService invoiceService;
     private final CartService cartService;
+    private final DeliveryService deliveryService;
 
-    public OrderService(OrderRepository orderRepository, OrderDetailsService orderDetailsService, InvoiceService invoiceService, CartService cartService) {
+    public OrderService(OrderRepository orderRepository, OrderDetailsService orderDetailsService, InvoiceService invoiceService, CartService cartService, DeliveryService deliveryService) {
         this.orderRepository = orderRepository;
         this.orderDetailsService = orderDetailsService;
         this.invoiceService = invoiceService;
         this.cartService = cartService;
+        this.deliveryService = deliveryService;
     }
 
-    public Order finalizeOrder(Order order) throws IOException {
+    public Order finalizeOrder(Order order) {
         Order savedOrder = save(order);
         invoiceService.createProformaInvoice(savedOrder);
         orderDetailsService.createOrderDetails(savedOrder);
+        deliveryService.createDeliveryCombinedWithOrder(savedOrder);
         cartService.deleteAll();
         return savedOrder;
     }

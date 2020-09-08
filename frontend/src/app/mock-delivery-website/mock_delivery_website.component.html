@@ -1,0 +1,27 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h2>Mock External Delivery Website</h2>
+  </div>
+  <div class="panel-body">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Delivery ID</th>
+        <th>Delivery Address</th>
+        <th>Delivery State</th>
+      </tr>
+      <tbody>
+      <tr>
+        <td>{{id}}</td>
+        <td>{{delivery.externalID}}</td>
+        <td>ul. {{delivery.deliveryAddress.street}} {{delivery.deliveryAddress.house_no}}
+          , {{delivery.deliveryAddress.city}}
+          <br/>{{delivery.deliveryAddress.post_office}} {{delivery.deliveryAddress.code}}
+          , {{delivery.deliveryAddress.country}}</td>
+        <td>{{delivery.state}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

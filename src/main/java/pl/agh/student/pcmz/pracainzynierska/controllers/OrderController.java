@@ -7,7 +7,6 @@ import pl.agh.student.pcmz.pracainzynierska.models.Order;
 import pl.agh.student.pcmz.pracainzynierska.services.OrderService;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +40,7 @@ public class OrderController {
     }
 
     @PostMapping("/orders/finalize")
-    public Order finalizeOrder(@Valid @RequestBody Order order) throws IOException {
+    public Order finalizeOrder(@Valid @RequestBody Order order) {
         return orderService.finalizeOrder(order);
     }
 

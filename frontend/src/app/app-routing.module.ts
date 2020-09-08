@@ -7,6 +7,7 @@ import { ProductListComponent } from './product-list/product-list.component';
 import { CartComponent } from './cart/cart.component';
 import { OrderComponent } from './order/order.component';
 import { OrderDetailsComponent } from './order_details/order_details.component';
+import {MockDeliveryWebsiteComponent} from './mock-delivery-website/mock_delivery_website.component';
 
 import { UpdateProductComponent } from './update-product/update-product.component';
 import {LogoutComponent} from "./logout/logout.component";
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'carts', component: CartComponent },
   { path: 'carts/:id', component: CartComponent },
   { path: 'order_details/:id', component: OrderDetailsComponent },
+  {path: 'mock_delivery_website/:id', component: MockDeliveryWebsiteComponent},
   { path: 'orders', component: OrderComponent },
 
   {

@@ -1,6 +1,8 @@
 package pl.agh.student.pcmz.pracainzynierska.services;
 
 import org.springframework.stereotype.Service;
+import pl.agh.student.pcmz.pracainzynierska.integrations.invoice.InvoiceIntegrationController;
+import pl.agh.student.pcmz.pracainzynierska.integrations.invoice.InvoiceIntegrationDocument;
 import pl.agh.student.pcmz.pracainzynierska.integrations.invoice.fakturaxl.FakturaXlCrud;
 import pl.agh.student.pcmz.pracainzynierska.integrations.invoice.fakturaxl.model.Dokument;
 import pl.agh.student.pcmz.pracainzynierska.integrations.invoice.fakturaxl.model.FakturaPozycje;
@@ -11,7 +13,6 @@ import pl.agh.student.pcmz.pracainzynierska.repositories.InvoiceRepository;
 import pl.agh.student.pcmz.pracainzynierska.repositories.OrderRepository;
 import pl.agh.student.pcmz.pracainzynierska.util.InvoiceAddress;
 
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,15 +25,17 @@ public class InvoiceService {
     private final OrderRepository orderRepository;
     private final CartRepository cartRepository;
 
+    private final InvoiceIntegrationController invoiceIntegrationController = new FakturaXlCrud();
+
     public InvoiceService(InvoiceRepository invoiceRepository, OrderRepository orderRepository, CartRepository cartRepository) {
         this.invoiceRepository = invoiceRepository;
         this.orderRepository = orderRepository;
         this.cartRepository = cartRepository;
     }
 
-    public Invoice createProformaInvoice(Order order) throws IOException {
-        Dokument invoiceBasedOnCart = createInvoiceBasedOnCart(order);
-        Dokument invoiceDokument = FakturaXlCrud.createProformaInvoice(invoiceBasedOnCart);
+    public Invoice createProformaInvoice(Order order) {
+        InvoiceIntegrationDocument invoiceBasedOnCart = createInvoiceBasedOnCart(order);
+        InvoiceIntegrationDocument invoiceDokument = invoiceIntegrationController.createProformaInvoice(invoiceBasedOnCart);
         Invoice invoiceDAO = new Invoice();
         invoiceDAO.setOrder(order);
         invoiceDAO.setFakturaXlIdProforma(invoiceDokument.getDokumentId());
@@ -56,9 +59,9 @@ public class InvoiceService {
         return getInvoicePdfAddress(getInvoiceByOrderId(orderId).getFakturaXlIdVat());
     }
 
-    public Invoice promoteProformaInvoiceIntoVat(Long orderId) throws IOException {
+    public Invoice promoteProformaInvoiceIntoVat(Long orderId) {
         Invoice oldInvoice = invoiceRepository.getByOrder(orderRepository.findById(orderId));
-        Dokument vatInvoice = FakturaXlCrud.promoteProformaInvoiceIntoVat(oldInvoice.getFakturaXlIdProforma());
+        InvoiceIntegrationDocument vatInvoice = invoiceIntegrationController.promoteProformaInvoiceIntoVat(oldInvoice.getFakturaXlIdProforma());
         oldInvoice.setFakturaXlIdVat(vatInvoice.getDokumentId());
         oldInvoice.setInvoiceNameVat(vatInvoice.getDokumnetNr());
         return invoiceRepository.save(oldInvoice);
@@ -112,7 +115,7 @@ public class InvoiceService {
     }
 
     private String getStringValue(double value) {
-        return String.valueOf(value).replace(',', '.');
+        return String.format("%.2f", value).replace(',', '.');
     }
 
     private InvoiceAddress getInvoicePdfAddress(String fakturaXlId) {

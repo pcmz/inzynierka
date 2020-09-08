@@ -59,6 +59,10 @@ export class OrderComponent implements OnInit {
     this.router.navigate(['order_details', id]);
   }
 
+  showDelivery(id: number) {
+    this.router.navigate(['mock_delivery_website', id]);
+  }
+
   openInNewTabProformaInvoice(order_id: number) {
     window.open(this.proformaInvoicesAddresses.get(order_id), "_blank");
   }

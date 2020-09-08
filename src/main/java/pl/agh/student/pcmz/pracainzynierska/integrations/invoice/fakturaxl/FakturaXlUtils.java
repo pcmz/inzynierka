@@ -1,6 +1,7 @@
 package pl.agh.student.pcmz.pracainzynierska.integrations.invoice.fakturaxl;
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import lombok.extern.java.Log;
 import pl.agh.student.pcmz.pracainzynierska.integrations.invoice.fakturaxl.model.Dokument;
 import pl.agh.student.pcmz.pracainzynierska.integrations.invoice.fakturaxl.model.Podmiot;
 
@@ -16,6 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+@Log
 public class FakturaXlUtils {
 
     public static final String API_TOKEN = "5hkOiYF3f1MfCEVwZ2s6hEjQdkrXNDgw2qj7QZyZiLL4Y7RJUD8UYqxEL8peq5yjA6SHx5i6QjdHVG9k";
@@ -42,25 +44,31 @@ public class FakturaXlUtils {
 
     private static final XmlMapper mapper = new XmlMapper();
 
-    static final Dokument makeHttpCall(String uri, Dokument dokument) throws IOException {
-        String parameters = mapper.writeValueAsString(dokument);
-        HttpURLConnection con = (HttpURLConnection) new URL(HOSTNAME + uri).openConnection();
-        con.setRequestMethod("GET");
-        con.setDoOutput(true);
-        DataOutputStream out = new DataOutputStream(con.getOutputStream());
-        out.writeBytes("xmlRequest=" + parameters);
-        out.flush();
-        out.close();
+    static final Dokument makeHttpCall(String uri, Dokument dokument) {
+        Dokument receivedDokument = null;
+        try {
+            String parameters = mapper.writeValueAsString(dokument);
+            HttpURLConnection con = (HttpURLConnection) new URL(HOSTNAME + uri).openConnection();
+            con.setRequestMethod("GET");
+            con.setDoOutput(true);
+            DataOutputStream out = new DataOutputStream(con.getOutputStream());
+            out.writeBytes("xmlRequest=" + parameters);
+            out.flush();
+            out.close();
 
-        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-        String inputLine;
-        StringBuilder content = new StringBuilder();
-        while ((inputLine = in.readLine()) != null) {
-            content.append(inputLine);
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuilder content = new StringBuilder();
+            while ((inputLine = in.readLine()) != null) {
+                content.append(inputLine);
+            }
+            in.close();
+            con.disconnect();
+            receivedDokument = mapper.readValue(content.toString(), Dokument.class);
+        } catch (IOException exception) {
+            log.warning(exception.getMessage());
         }
-        in.close();
-        con.disconnect();
-        return mapper.readValue(content.toString(), Dokument.class);
+        return receivedDokument;
     }
 
     static void enrichDokument(Dokument dokument) {

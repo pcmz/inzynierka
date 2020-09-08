@@ -1,8 +1,8 @@
-import { Customer } from "./customer";
+import {Customer} from "./customer";
 
 export class Order {
-    id: number;
-    customer: Customer;
-    createDate: string;
-    updateDate: string;
+  id: number;
+  customer: Customer;
+  createDate: string;
+  updateDate: string;
 }

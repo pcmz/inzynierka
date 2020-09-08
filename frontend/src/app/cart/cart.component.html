@@ -5,43 +5,93 @@
   <div class="panel-body">
     <table class="table table-striped">
       <thead>
-        <tr>
-          <!-- <th>Id</th> -->
-          <th>Product name</th>
-          <th>Unit price [zl gross]</th>
-          <th>Quantity [m2 (lm)]</th>
-          <th>Subtotal [zl gross]</th>
-          <th>Remove</th>
-        </tr>
+      <tr>
+        <!-- <th>Id</th> -->
+        <th>Product name</th>
+        <th>Unit price [zl gross]</th>
+        <th>Quantity [m2 (lm)]</th>
+        <th>Subtotal [zl gross]</th>
+        <th>Remove</th>
+      </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let cart of carts | async">
-          <!-- <td>{{cart.id}}</td> -->
-          <td><img src={{cart.product.ipath}} class="mr-2" style="width: 40px"> {{cart.product.productName}}</td>
-          <td>{{cart.product.unitPrice}}</td>
-          <td>{{cart.quantity}}</td>
-          <td>{{cart.subtotal | number:'1.2-2'}}</td>
-          <td><button id=remove (click)="deleteCarts(cart.id)">Remove</button>
-          </td>
-        </tr>
+      <tr *ngFor="let cart of carts | async">
+        <!-- <td>{{cart.id}}</td> -->
+        <td><img src={{cart.product.ipath}} class="mr-2" style="width: 40px"> {{cart.product.productName}}</td>
+        <td>{{cart.product.unitPrice}}</td>
+        <td>{{cart.quantity}}</td>
+        <td>{{cart.subtotal | number:'1.2-2'}}</td>
+        <td>
+          <button id=remove (click)="deleteCarts(cart.id)">Remove</button>
+        </td>
+      </tr>
       </tbody>
     </table>
     <div>
-        <h5 style="display: inline;">Total: {{total | number:'1.2-2'}} zl</h5>
+      <h5 style="display: inline;">Total: {{total | number:'1.2-2'}} zl</h5>
     </div>
   </div>
 </div>
 
 <br>
 <br>
+<h6>Select a delivery destination:</h6>
+<button
+  (click)="expandDeliveryOptions()">{{showDeliveryAddress ? 'Deliver to company address' : 'Choose delivery address'}}</button>
+<div *ngIf="showDeliveryAddress; then thenBlock; else elseBlock">this is ignored</div>
+<ng-template #thenBlock>
+  <form (ngSubmit)="onSubmitDeliveryAddress()">
+    <br>
+    <br>
+    <div class="form-group form-inline">
+      <label for="country">Country</label>
+      <input type="text" class="form-control" id="country" required [(ngModel)]="deliveryAddress.country"
+             name="country">
+    </div>
+
+    <div class="form-group form-inline">
+      <label for="city">City</label>
+      <input type="text" class="form-control" id="city" required [(ngModel)]="deliveryAddress.city" name="city">
+    </div>
+
+    <div class="form-group form-inline">
+      <label for="code">Code</label>
+      <input type="text" class="form-control" id="code" required [(ngModel)]="deliveryAddress.code" name="code">
+    </div>
+
+    <div class="form-group form-inline">
+      <label for="street">Street</label>
+      <input type="text" class="form-control" id="street" required [(ngModel)]="deliveryAddress.street" name="street">
+    </div>
+
+    <div class="form-group form-inline">
+      <label for="house_no">House number</label>
+      <input type="text" class="form-control" id="house_no" required [(ngModel)]="deliveryAddress.house_no"
+             name="house_no">
+    </div>
+
+    <div class="form-group form-inline">
+      <label for="post_office">Post office</label>
+      <input type="text" class="form-control" id="post_office" required [(ngModel)]="deliveryAddress.post_office"
+             name="post_office">
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <br>
+  </form>
+</ng-template>
+<ng-template #elseBlock></ng-template>
+<br>
+<br>
+<br>
 <form [formGroup]="countryForm" (ngSubmit)="callall()">
- <h6>Select a customer:</h6>
- <select formControlName="countryControl">
-   <option [ngValue]="cust" *ngFor="let cust of customerArray">{{cust.name}}</option>
- </select>
-    <!-- icons from page: https://icons8.com/  -->
- <a><img class="pointer" src='assets/icons/add_customer.png' (click)="this.myfunction()">Add new customer</a>
- <br>
- <br>
- <button type="submit" class="btn btn-primary"> Complete the order </button>
+  <h6>Select a customer:</h6>
+  <select formControlName="countryControl">
+    <option [ngValue]="cust" *ngFor="let cust of customerArray">{{cust.name}}</option>
+  </select>
+  <!-- icons from page: https://icons8.com/  -->
+  <a><img class="pointer" src='assets/icons/add_customer.png' (click)="this.myfunction()">Add new customer</a>
+  <br>
+  <br>
+  <button type="submit" class="btn btn-primary"> Complete the order</button>
 </form>

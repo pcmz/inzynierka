@@ -1,52 +1,56 @@
 package pl.agh.student.pcmz.pracainzynierska.integrations.invoice.fakturaxl;
 
+import pl.agh.student.pcmz.pracainzynierska.integrations.invoice.InvoiceIntegrationController;
+import pl.agh.student.pcmz.pracainzynierska.integrations.invoice.InvoiceIntegrationDocument;
 import pl.agh.student.pcmz.pracainzynierska.integrations.invoice.fakturaxl.model.Dokument;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static pl.agh.student.pcmz.pracainzynierska.integrations.invoice.fakturaxl.FakturaXlUtils.*;
 
-public class FakturaXlCrud {
+public class FakturaXlCrud implements InvoiceIntegrationController {
 
-    public static final Dokument getInvoice(String id) throws IOException {
-        Dokument dokument = new Dokument();
-        dokument.setDokumentId(id);
-        dokument.setApiToken(API_TOKEN);
-        return makeHttpCall("/api/dokument_odczytaj.php", dokument);
+    @Override
+    public final InvoiceIntegrationDocument getInvoice(String id) {
+        Dokument document = new Dokument();
+        document.setDokumentId(id);
+        document.setApiToken(API_TOKEN);
+        return makeHttpCall("/api/dokument_odczytaj.php", document);
     }
 
-    public static final Dokument createProformaInvoice(Dokument dokument) throws IOException {
-        enrichDokument(dokument);
-        dokument.setTypFaktury(TYP_FAKTURY_PROFORMA);
-        dokument.setStatus(STATUS_NIEOPLACONA);
-        return createInvoice(dokument);
+    @Override
+    public final Dokument createProformaInvoice(InvoiceIntegrationDocument document) {
+        enrichDokument((Dokument) document);
+        document.setTypFaktury(TYP_FAKTURY_PROFORMA);
+        document.setStatus(STATUS_NIEOPLACONA);
+        return createInvoice(document);
     }
 
-    public static final Dokument createVatInvoice(Dokument dokument) throws IOException {
-        dokument.setTypFaktury(TYP_FAKTURY_VAT);
-        dokument.setStatus(STATUS_OPLACONA);
-        dokument.setUwagi("Faktura VAT do faktury Proforma nr " + dokument.getNumerFaktury());
+    public final Dokument createVatInvoice(InvoiceIntegrationDocument document) {
+        document.setTypFaktury(TYP_FAKTURY_VAT);
+        document.setStatus(STATUS_OPLACONA);
+        document.setUwagi("Faktura VAT do faktury Proforma nr " + document.getNumerFaktury());
         String today = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        dokument.setDataWystawienia(today);
-        dokument.setDataOplacenia(today);
-        dokument.setTerminPlatnosciData(today);
-        dokument.setKwotaOplacona(dokument.getWartoscBrutto());
-        dokument.setKod(null);
-        dokument.setNumerFaktury(null);
-        dokument.setIdDzialyFirmy(ID_DZIALY_FIRMY);
-        dokument.getNabywca().setKraj(KRAJ);
-        dokument.setRodzajPlatnosci(RODZAJ_PLATNOSCI);
-        return createInvoice(dokument);
+        document.setDataWystawienia(today);
+        document.setDataOplacenia(today);
+        document.setTerminPlatnosciData(today);
+        document.setKwotaOplacona(document.getWartoscBrutto());
+        document.setKod(null);
+        document.setNumerFaktury(null);
+        document.setIdDzialyFirmy(ID_DZIALY_FIRMY);
+        document.getNabywca().setKraj(KRAJ);
+        document.setRodzajPlatnosci(RODZAJ_PLATNOSCI);
+        return createInvoice(document);
     }
 
-    public static final Dokument promoteProformaInvoiceIntoVat(String proformaInvoiceId) throws IOException {
+    @Override
+    public final InvoiceIntegrationDocument promoteProformaInvoiceIntoVat(String proformaInvoiceId) {
         return createVatInvoice(getInvoice(proformaInvoiceId));
     }
 
-    public static final Dokument createInvoice(Dokument dokument) throws IOException {
-        dokument.setApiToken(API_TOKEN);
-        return makeHttpCall("/api/dokument_dodaj.php", dokument);
+    public final Dokument createInvoice(InvoiceIntegrationDocument document) {
+        document.setApiToken(API_TOKEN);
+        return makeHttpCall("/api/dokument_dodaj.php", (Dokument) document);
     }
 }

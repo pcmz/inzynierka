@@ -3576,3 +3576,62 @@ VALUES (1, 'Cracow', '32-389', 'Poland', '1', 'Cracow', 'Domowa'),
        (2, 'Wroclaw', '90-123', 'Poland', '78', 'Wroclaw', 'Parkowa'),
        (3, 'Gdansk', '78-001', 'Poland', '63', 'Gdansk', 'Ogrodowa');
 
+
+CREATE TABLE IF NOT EXISTS `delivery_addresses`
+(
+    `ID`           int(11) NOT NULL auto_increment,
+    `City`         varchar(40) character set utf8 default NULL,
+    `Code`         varchar(40) character set utf8 default NULL,
+    `Country`      varchar(40) character set utf8 default NULL,
+    `House_number` varchar(40) character set utf8 default NULL,
+    `Post_office`  varchar(40) character set utf8 default NULL,
+    `Street`       varchar(40) character set utf8 default NULL,
+    PRIMARY KEY (`ID`)
+) ENGINE = MyISAM
+  DEFAULT CHARSET = latin1
+  AUTO_INCREMENT = 1;
+
+
+
+CREATE TABLE IF NOT EXISTS `delivery`
+(
+    `ID`                int(11) NOT NULL auto_increment,
+    `OrderID`           int(11)                        default NULL,
+    `DeliveryAddressID` int(11)                        default NULL,
+    `ExternalID`        varchar(40) character set utf8 default NULL,
+    `State`             varchar(40) character set utf8 default NULL,
+    PRIMARY KEY (`ID`)
+) ENGINE = MyISAM
+  DEFAULT CHARSET = latin1
+  AUTO_INCREMENT = 1;
+
+
+
+CREATE TABLE IF NOT EXISTS `delivery_addresses`
+(
+    `ID`           int(11) NOT NULL auto_increment,
+    `City`         varchar(40) character set utf8 default NULL,
+    `Code`         varchar(40) character set utf8 default NULL,
+    `Country`      varchar(40) character set utf8 default NULL,
+    `House_number` varchar(40) character set utf8 default NULL,
+    `Post_office`  varchar(40) character set utf8 default NULL,
+    `Street`       varchar(40) character set utf8 default NULL,
+    PRIMARY KEY (`ID`)
+) ENGINE = MyISAM
+  DEFAULT CHARSET = latin1
+  AUTO_INCREMENT = 1;
+
+
+CREATE TABLE IF NOT EXISTS `delivery`
+(
+    `ID`                int(11) NOT NULL auto_increment,
+    `OrderID`           int(11)                        default NULL,
+    `DeliveryAddressID` int(11)                        default NULL,
+    `ExternalID`        varchar(40) character set utf8 default NULL,
+    `State`             varchar(40) character set utf8 default NULL,
+    PRIMARY KEY (`ID`)
+) ENGINE = MyISAM
+  DEFAULT CHARSET = latin1
+  AUTO_INCREMENT = 1;
+
+

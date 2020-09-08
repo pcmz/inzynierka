@@ -10,14 +10,15 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { CreateProductComponent } from './create-product/create-product.component';
-import { ProductDetailsComponent } from './product-details/product-details.component';
-import { ProductListComponent } from './product-list/product-list.component';
-import { UpdateProductComponent } from './update-product/update-product.component';
-import { CartComponent } from './cart/cart.component';
-import { OrderComponent } from './order/order.component';
-import { OrderDetailsComponent } from './order_details/order_details.component';
-import { CustomerComponent } from './customer/customer.component';
+import {CreateProductComponent} from './create-product/create-product.component';
+import {ProductDetailsComponent} from './product-details/product-details.component';
+import {ProductListComponent} from './product-list/product-list.component';
+import {UpdateProductComponent} from './update-product/update-product.component';
+import {CartComponent} from './cart/cart.component';
+import {OrderComponent} from './order/order.component';
+import {OrderDetailsComponent} from './order_details/order_details.component';
+import {MockDeliveryWebsiteComponent} from './mock-delivery-website/mock_delivery_website.component';
+import {CustomerComponent} from './customer/customer.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
@@ -53,6 +54,7 @@ export function kcFactory(keycloakService: KeycloakService) {
     CartComponent,
     OrderComponent,
     OrderDetailsComponent,
+    MockDeliveryWebsiteComponent,
     CustomerComponent
 
   ],

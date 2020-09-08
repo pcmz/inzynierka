@@ -10,11 +10,12 @@
           <th>Customer name</th>
           <th>Customer email</th>
           <th>Customer phone</th>
-          <th>Shipping address</th>
+          <th>Invoice address</th>
           <th>Order data</th>
-          <th>Action</th>
+          <th>Details</th>
           <th style="text-align: center">Proforma invoice</th>
           <th style="text-align: center">VAT invoice</th>
+          <th style="text-align: center">Delivery</th>
         </tr>
       </thead>
       <tbody>
@@ -27,7 +28,7 @@
           ul. {{order.customer.address.street}} {{order.customer.address.house_no}}</td>
         <td>{{order.createDate | date}}</td>
         <td>
-          <button (click)="showDetails(order.id)" class="btn btn-info" style="margin-left: 10px">Show</button>
+          <button (click)="showDetails(order.id)" class="btn btn-info" style="margin-left: 10px">Show details</button>
         </td>
         <td>
           <button (click)="openInNewTabProformaInvoice(order.id)" class="btn btn-info"
@@ -36,6 +37,9 @@
         <td>
           <button (click)="createOrOpenVatInvoice(order.id)" class="btn btn-info"
                   style="margin-left: 10px">{{vatInvoicesNames.get(order.id)}}</button>
+        </td>
+        <td>
+          <button (click)="showDelivery(order.id)" class="btn btn-info" style="margin-left: 10px">Show Delivery</button>
         </td>
       </tr>
       </tbody>

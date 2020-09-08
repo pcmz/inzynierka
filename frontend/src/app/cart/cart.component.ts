@@ -9,8 +9,11 @@ import {OrderDetails} from "./../order_details";
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {CustomerComponent} from "../customer/customer.component";
+import {Address} from "../address";
+import {DeliveryAddressService} from "../delivery_address.service";
+import {DeliveryAddress} from "../delivery_address";
 
 @Component({
   selector: "app-cart",
@@ -23,6 +26,22 @@ export class CartComponent implements OnInit {
   cartsArray = [];
   customerArray = [];
   orderArray = [];
+  showDeliveryAddress: boolean = false;
+  deliveryAddress: Address = new Address();
+  deliverElsewhere = false;
+
+  constructor(private cartService: CartService, private customerService: CustomerService, private fb: FormBuilder, private orderService: OrderService, private route: ActivatedRoute,
+              private router: Router, private modalService: NgbModal, private deliveryAddressService: DeliveryAddressService) {
+  }
+
+  onSubmitDeliveryAddress() {
+    this.deliverElsewhere = true;
+    this.deliveryAddressService.createDeliveryAddress(this.deliveryAddress)
+      .subscribe((data: Address) => {
+        console.log(data)
+        this.deliveryAddress = data
+      }, error => console.log(error));
+  }
 
   //downdrop menu
   customers: Observable<Customer[]>;
@@ -32,8 +51,8 @@ export class CartComponent implements OnInit {
   cart: Cart;
   orderDetails: OrderDetails = new OrderDetails();
 
-  constructor(private cartService: CartService, private customerService: CustomerService, private fb: FormBuilder, private orderService: OrderService, private route: ActivatedRoute,
-              private router: Router, private modalService: NgbModal) {
+  expandDeliveryOptions() {
+    this.showDeliveryAddress = !this.showDeliveryAddress
   }
 
   ngOnInit() {
@@ -88,10 +107,16 @@ export class CartComponent implements OnInit {
 
   completeTheOrder() {
     this.order.customer = this.countryForm.controls['countryControl'].value;
-    this.orderService.finalizeOrder(this.order)
-      .subscribe(data =>
-          console.log(data),
-        error => console.log(error));
+    this.deliveryAddress = this.deliverElsewhere ? this.deliveryAddress : this.copyCustomerAddressIntoDeliveryAddress(this.order.customer.address);
+    this.deliveryAddressService.createDeliveryAddress(this.deliveryAddress)
+      .subscribe(data => {
+          console.log(data)
+          this.orderService.finalizeOrder(this.order)
+            .subscribe(data =>
+                console.log(data),
+              error => console.log(error));
+        },
+        error => console.log(error))
   }
 
   callall() {
@@ -99,11 +124,22 @@ export class CartComponent implements OnInit {
     this.redirectTo('/products');
   }
 
-  myfunction(){
+  myfunction() {
     // console.log("Hello");
     // this.router.navigate(['/products']);
     const modalRef = this.modalService.open(CustomerComponent);
     modalRef.componentInstance.name = 'World';
+  }
+
+  copyCustomerAddressIntoDeliveryAddress(customerAddress: Address): DeliveryAddress {
+    const deliveryAddress = new DeliveryAddress();
+    deliveryAddress.city = customerAddress.city;
+    deliveryAddress.code = customerAddress.code;
+    deliveryAddress.country = customerAddress.country;
+    deliveryAddress.house_no = customerAddress.house_no;
+    deliveryAddress.post_office = customerAddress.post_office;
+    deliveryAddress.street = customerAddress.street;
+    return deliveryAddress;
   }
 
 }

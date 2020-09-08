@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+import pl.agh.student.pcmz.pracainzynierska.integrations.invoice.InvoiceIntegrationDocument;
 
 import java.util.List;
 import java.util.Objects;
@@ -13,7 +14,7 @@ import static pl.agh.student.pcmz.pracainzynierska.util.StringSanitizer.sanitize
 
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Dokument {
+public class Dokument implements InvoiceIntegrationDocument {
 
     private String kod;
     private String dokumentId;
