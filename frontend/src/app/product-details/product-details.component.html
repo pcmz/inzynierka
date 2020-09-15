@@ -41,14 +41,15 @@
   <label class="card-text">
     <strong>Quantity to order: </strong>
     <input [(ngModel)]=count
-          (change)="validateCount()"
-          type="number"
-          name="count"
-          required
-          min="1"
-          [max]=product?.quantity><button type="submit" class="btn btn-primary buttonStyle"> Add to Cart </button>
-          <div class="alert" [class.visible]="isVisible">
-              <p class="text-center">{{des}}</p>
-          </div>
+           (change)="validateCount()"
+           type="number"
+           name="count"
+           required
+           min="1"
+           [max]=product?.quantity>
+    <button id="addToCart" type="submit" class="btn btn-primary buttonStyle"> Add to Cart</button>
+    <div class="alert" [class.visible]="isVisible">
+      <p class="text-center">{{des}}</p>
+    </div>
   </label>
 </form>
