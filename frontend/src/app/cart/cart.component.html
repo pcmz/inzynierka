@@ -38,7 +38,7 @@
 <h6>Select a delivery destination:</h6>
 <button
   (click)="expandDeliveryOptions()">{{showDeliveryAddress ? 'Deliver to company address' : 'Choose delivery address'}}</button>
-<div *ngIf="showDeliveryAddress; then thenBlock; else elseBlock">this is ignored</div>
+<div style="width: 400px;" *ngIf="showDeliveryAddress; then thenBlock; else elseBlock">this is ignored</div>
 <ng-template #thenBlock>
   <form (ngSubmit)="onSubmitDeliveryAddress()">
     <br>
